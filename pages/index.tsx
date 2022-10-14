@@ -4,7 +4,7 @@ import Image from 'next/image'
 import useSWR from 'swr';
 import styles from '../styles/Home.module.css'
 
-
+// @ts-ignore
 export const fetcher = (...args: any[]) => fetch(...args).then(res => res.json());
 
 const Home: NextPage = (body) => {
