@@ -1,19 +1,16 @@
-import type { GetStaticProps, NextPage } from 'next'
+import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
-import { Fragment } from 'react';
 import useSWR, { SWRResponse } from 'swr';
 import { PosterLoader } from '../PosterLoader';
 import styles from '../styles/Home.module.css'
-import { PopularResponse, Result } from '../types/getPopularTypes';
+import { PopularResponse, Result } from '../types/GetPopularTypes';
 
 // @ts-ignore
 export const fetcher = (...args: any[]) => fetch(...args).then(res => res.json());
 
-const Home: NextPage = (body) => {
+const Home: NextPage = () => {
 
-  const { data, error }: SWRResponse<PopularResponse, Error> = useSWR('/api/getpopular/1', fetcher);
-  console.log(data);
   return (
     <div className={styles.container}>
       <Head>
@@ -24,21 +21,21 @@ const Home: NextPage = (body) => {
 
       <main className={styles.main}>
         <h1>Project Movies</h1>
-        {!data && !error ?
-          <p>Loading...</p> :
-          !data ? <p>An error occured</p> :
-            getPopular(data)
-        }
+        <PopularWidget />
       </main>
 
     </div>
   )
 }
 
-const getPopular = (popularResponse: PopularResponse): React.ReactElement => {
+const PopularWidget = (): React.ReactElement => {
+  const { data, error }: SWRResponse<PopularResponse, Error> = useSWR('/api/getpopular/1', fetcher);
+
+  if (!data && !error) return <p>Loading...</p>
+  if (error) return <p>An error occured.</p>
   return (
     <div className='grid grid-rows-3 grid-flow-col'>
-      {popularResponse.results.map((item: Result, index: number) => (
+      {data!.results.map((item: Result, index: number) => (
         <div key={item.id}>
           <Image
             src={item.poster_path}
