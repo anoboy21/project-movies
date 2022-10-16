@@ -13,7 +13,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Returns a List, first element is the parent folder NAME, in this case: getpopular
     const slugs = req.query;
     const page = slugs.args![1];
-
     let data;
 
     const request = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.TMDB_API_KEY}&language=en-US&page=${page}`);
