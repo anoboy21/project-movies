@@ -1,11 +1,11 @@
 export interface PopularResponse {
     page:          number;
-    results:       Result[];
+    results:       PopularResult[];
     total_results: number;
     total_pages:   number;
 }
 
-export interface Result {
+export interface PopularResult {
     poster_path:       string;
     adult:             boolean;
     overview:          string;
