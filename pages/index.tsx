@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import { Fragment } from 'react';
 import useSWR, { SWRResponse } from 'swr';
 import { PosterLoader } from '../PosterLoader';
 import styles from '../styles/Home.module.css'
@@ -12,15 +13,14 @@ export const fetcher = (...args: any[]) => fetch(...args).then(res => res.json()
 const Home: NextPage = () => {
 
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <title>Project Movies</title>
         <meta name="description" content="Project Movies - This is a placeholder" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1>Project Movies</h1>
+      <main>
         <PopularWidget />
       </main>
 
@@ -34,19 +34,24 @@ const PopularWidget = (): React.ReactElement => {
   if (!data && !error) return <p>Loading...</p>
   if (error) return <p>An error occured.</p>
   return (
-    <div className='grid grid-rows-3 grid-flow-col'>
-      {data!.results.map((item: Result, index: number) => (
-        <div key={item.id}>
-          <Image
-            src={item.poster_path}
-            loader={PosterLoader}
-            alt={`${item.title} poster`}
-            width={500}
-            height={500}
-          />
-        </div>
-      ))}
+    <div className=''>
+      <h1 className='m-3 font-semibold text-2xl text-gray-100'>What&apos;s Popular</h1>
+      <div className='grid grid-cols-2'>
+        {data!.results.map((item: Result, index: number) => (
+          <div key={item.id} className="m-3 bg-neutral-900 rounded-sm text-xsm ">
+            <Image
+              src={item.poster_path}
+              loader={PosterLoader}
+              alt={`${item.title} poster`}
+              width={500}
+              height={500}
+            />
+            <p className='font-medium text-lg ml-2 pb-2 text-gray-200'>{item.title}</p>
+          </div>
+        ))}
+      </div>
     </div>
+
   );
 }
 
