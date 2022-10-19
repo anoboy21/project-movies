@@ -16,10 +16,8 @@ export const PopularWidget = (): React.ReactElement => {
 const PopularWidgetContent = (): React.ReactElement => {
   const { data, error }: SWRResponse<PopularResponse, Error> = useSWR('/api/getpopular/1', fetcher);
 
-  if (!data && !error)
-    return <RenderPopularSkeleton />;
-  if (error)
-    return <p>An error occured.</p>;
+  if (!data && !error) return <RenderPopularSkeleton />;
+  if (error) return <Error />;
   return (
     <div className='flex flex-row overflow-x-scroll'>
       {data!.results.map((item: PopularResult, index: number) => {
@@ -47,6 +45,16 @@ const PopularWidgetContent = (): React.ReactElement => {
 
   );
 };
+
+const Error = () => {
+  return (
+    <div className='w-auto h-[451px] flex flex-col items-center justify-center'>
+      <p className='font-semibold text-2xl text-neutral-100'>Something&apos;s not right.</p>
+      <p className='font-base text-lg text-neutral-400'>Please check your internet connection</p>
+    </div>
+  )
+}
+
 const RenderPopularSkeleton = () => {
   return (
     <div className='flex flex-row overflow-x-scroll'>
@@ -58,6 +66,7 @@ const RenderPopularSkeleton = () => {
     </div>
   );
 };
+
 const PopularSkeleton = () => {
   return (
     <div className='w-[250px] ml-2 mr-2'>
