@@ -1,8 +1,5 @@
-import moment from 'moment';
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { Fragment } from 'react';
-import { UpcomingResponse, UpcomingResult } from '../types/GetUpcomingTypes';
 import { PopularWidget } from '../components/PopularWidget';
 
 // @ts-ignore
