@@ -4,13 +4,15 @@ import useSWR from "swr";
 import { Movie } from "../../types/Movie";
 import Image from "next/future/image";
 import { PosterLoader } from "../../PosterLoader";
+import { Navbar } from "../../components/Navbar";
 
 export default function MoviePage({ data }: { data: Movie }) {
     console.log(data);
     return (
         <Fragment>
             <div style={{backgroundImage: `linear-gradient(to right, rgba(24, 26, 27, 0.84), rgba(0,0,0, 0.8)), url(https://image.tmdb.org/t/p/original/${data.backdrop_path})`}}>
-                <div className="flex flex-col justify-center items-center mb-8 p-5">
+            <Navbar />
+                <div className="flex flex-col justify-center items-center p-5">
                     <Image
                         src={data.poster_path ? data.poster_path : `https://via.placeholder.com/250x375?text=${data.title}`}
                         loader={PosterLoader}

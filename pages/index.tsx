@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import { Navbar } from '../components/Navbar';
 import { PopularWidget } from '../components/PopularWidget';
 
 // @ts-ignore
@@ -15,6 +16,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <Navbar />
       <main className='bg-black'>
         <div className='flex flex-col justify-center items-center h-[50vh] w-auto bg-black'>
           <p className="font-semibold text-neutral-200 text-xl mb-5">All kinds of Shows that you&apos;ll enjoy</p>
