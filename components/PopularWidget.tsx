@@ -5,9 +5,9 @@ import { PopularResponse, PopularResult } from '../types/GetPopularTypes';
 import Link from 'next/link';
 import { fetcher } from '../pages/index';
 
-export const PopularWidget = (): React.ReactElement => {
+export const PopularWidget = (props: any): React.ReactElement => {
   return (
-    <div className='mb-2'>
+    <div className={`${props.topLevelStyles}`}>
       <h1 className='m-3 font-semibold text-3xl text-gray-100'>What&apos;s Popular</h1>
       <PopularWidgetContent />
     </div>
