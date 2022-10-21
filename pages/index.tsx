@@ -2,9 +2,14 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import { Navbar } from '../components/Navbar';
 import { PopularWidget } from '../components/PopularWidget';
+import { Movie } from '../types/Movie';
+import { UpcomingWidget } from '../components/UpcomingWidget';
 
 // @ts-ignore
 export const fetcher = (...args: any[]) => fetch(...args).then(res => res.json());
+
+//TODO: Change default scrollbar
+
 
 const Home: NextPage = () => {
 
@@ -23,47 +28,15 @@ const Home: NextPage = () => {
           <SearchBar />
         </div>
 
-        <PopularWidget />
+        <PopularWidget topLevelStyles={"mb-10"} />
+        
+        <UpcomingWidget topLevelStyles={"mt-10"} />
       </main>
     </div>
   )
 }
 
-// const UpcomingWidget = (): React.ReactElement => {
-
-//   const { data, error }: SWRResponse<UpcomingResponse, Error> = useSWR("/api/getupcoming/1", fetcher);
-
-//   if (!data && !error) return <p>Loading...</p>
-//   if (error) return <p>An error occured</p>
-//   return (
-//     <Fragment>
-//       <h1 className='mt-3 ml-3 font-semibold text-2xl text-gray-900'>Upcoming</h1>
-//       <div className='grid grid-cols-2'>
-//         {data!.results.map((item: UpcomingResult, index: number) => {
-//           if (index <= 3) return (
-//             <div key={item.id} className="flex flex-col m-3 bg-neutral-100 shadow-md shadow-neutral-300 rounded-sm text-xsm">
-//               <Image
-//                 src={item.poster_path}
-//                 loader={PosterLoader}
-//                 alt={`${item.title} poster`}
-//                 width={250}
-//                 height={250}
-//               />
-//               <div className='flex flex-col grow justify-between mt-2'>
-//                 <p className='font-medium text-lg ml-2 pb-2 text-gray-800'>{item.title}</p>
-//                 <p className='font-medium text-md ml-2 pb-2 text-gray-600 justify-end'>Released {moment(item.release_date).endOf("day").fromNow()}</p>
-//               </div>
-//             </div>
-//           )
-//           else return "";
-//         })}
-//       </div>
-//     </Fragment>
-//   );
-// }
-
 //TODO: Improve Search button
-
 function SearchBar() {
   return (
     <div className="flex items-center">
