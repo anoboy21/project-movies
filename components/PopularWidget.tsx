@@ -16,13 +16,15 @@ export const PopularWidget = (props: any): React.ReactElement => {
 const PopularWidgetContent = (): React.ReactElement => {
   const { data, error }: SWRResponse<PopularResponse, Error> = useSWR('/api/getpopular/1', fetcher);
 
+  console.log(data);
+
   if (!data && !error) return <RenderPopularSkeleton />;
   if (error) return <Error />;
   return (
     <div className='flex flex-row overflow-x-scroll'>
-      {data!.results.map((item: PopularResult, index: number) => {
+      {data!.results.map((item: PopularResult) => {
         return (
-          <div key={item.id} className="grid auto-cols-max mr-2 ml-2 rounded-md text-xsm max-w-[250px] transition-all delay-25 hover:bg-red-600">
+          <div key={item.id} className="grid auto-cols-max mr-2 ml-2 rounded-md text-xsm max-w-[250px] transition-all delay-10 hover:bg-neutral-800">
             <Link href={`/movie/${item.id}`} passHref>
               <a>
                 <Image
@@ -34,7 +36,7 @@ const PopularWidgetContent = (): React.ReactElement => {
                   className="rounded-md" />
                 <div className='flex flex-col grow mt-2 max-w-[250px]'>
                   <p className='font-medium text-lg ml-2 pb-2 text-gray-100 truncate'>{item.title}</p>
-                  <p className='font-medium text-md ml-2 pb-2 text-gray-300 justify-end'>{(item.release_date).toString()}</p>
+                  <Metrics vote_average={item.vote_average} />
                 </div>
               </a>
             </Link>
@@ -45,6 +47,21 @@ const PopularWidgetContent = (): React.ReactElement => {
 
   );
 };
+
+const Metrics = ({ vote_average }: { vote_average: number }) => {
+
+  const percentage = Math.round(vote_average * 10).toString();
+
+  return (
+    <div className='flex flex-row items-center justify-between mr-2 ml-2 gap-3'>
+      <div className='h-4 w-full bg-neutral-900 rounded-sm flex items-center'>
+        <span className={`inline-block relative bg-red-600 h-2 ml-1 mr-2`} style={{ width: `${percentage}%` }}></span>
+      </div>
+      <p className='font-semibold text-lg text-red-600'>{percentage}%</p>
+    </div>
+
+  )
+}
 
 const Error = () => {
   return (
