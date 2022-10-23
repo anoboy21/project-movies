@@ -101,8 +101,8 @@ const CastContent = ({ id }: { id: number }) => {
     console.log(data);
 
     //TODO: Replace placeholder.com with something better
-    if (!data && !error) return <p>Loading...</p>;
-    if (!data) return <p>Error occured</p>;
+    if (!data && !error) return <ActorSkeletons />;
+    if (!data) return <Error />;
     return (
         <div className="flex flex-row overflow-x-auto">
             {data.cast.map((cast: CastContent, index: number) => {
@@ -126,6 +126,40 @@ const CastContent = ({ id }: { id: number }) => {
     )
 }
 
+const Error = () => {
+    return(
+        <div className="flex flex-col justify-center items-center w-auto h-[252px]">
+            <p className="font-semibold text-3xl text-neutral-100">Something went wrong...</p>
+            <p className="font-semibold text-lg text-neutral-400">Please check your internet connection.</p>
+        </div>
+    )
+}
+
+const ActorSkeletons = () => {
+    return (
+        <div className="flex flex-row overflow-x-auto gap-2">
+            <ActorSkeleton />
+            <ActorSkeleton />
+            <ActorSkeleton />
+            <ActorSkeleton />
+            <ActorSkeleton />
+            <ActorSkeleton />
+            <ActorSkeleton />
+            <ActorSkeleton />
+            <ActorSkeleton />
+            <ActorSkeleton />
+        </div>
+    )
+}
+
+
+const ActorSkeleton = () => (
+    <div className="mb-2">
+        <div className="w-[125px] h-[187px] animate-pulse bg-gray-100 rounded-md mb-2"></div>
+        <div className="w-24 h-1 animate-pulse bg-gray-100 rounded-sm mb-1"></div>
+        <div className="w-20 h-1 animate-pulse bg-gray-200 rounded-sm"></div>
+    </div>
+)
 export async function getServerSideProps(context: GetServerSidePropsContext) {
     let data: Movie;
 
