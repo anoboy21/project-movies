@@ -7,6 +7,7 @@ import { fetcher } from '../pages/index';
 import { UpcomingResponse, UpcomingResult } from '../types/GetUpcomingTypes';
 import React, { Fragment } from 'react';
 import { ScriptProps } from 'next/script';
+import moment from 'moment';
 
 export const UpcomingWidget = (props: any): React.ReactElement => {
   
@@ -35,10 +36,10 @@ const UpcomingWidgetContent = (): React.ReactElement => {
                   alt={`${item.title} poster`}
                   width={250}
                   height={375}
-                  className="rounded-md" />
+                  className="rounded-md h-[375px]" />
                 <div className='flex flex-col grow mt-2 max-w-[250px]'>
                   <p className='font-medium text-lg ml-2 pb-2 text-gray-100 truncate'>{item.title}</p>
-                  <p className='font-medium text-md ml-2 pb-2 text-gray-300 justify-end'>{(item.release_date).toString()}</p>
+                  <p className='font-medium text-md ml-2 pb-2 text-gray-300 justify-end'>{moment(item.release_date).startOf("day").fromNow()}</p>
                 </div>
               </a>
             </Link>
