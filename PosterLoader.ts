@@ -1,3 +1,4 @@
+import Placeholder from "./assets/MovieSVG.svg";
 
 //TODO: add a placeholder case
 //TODO: Figure out width handling
@@ -8,5 +9,6 @@
  * @returns 
  */
 export const PosterLoader = ({src, width}: {src: string, width: number}) => {
+    if(src == Placeholder.src) return Placeholder.src;
     return `https://image.tmdb.org/t/p/w500/${src}`;
 }
