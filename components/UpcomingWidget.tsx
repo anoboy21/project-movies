@@ -27,7 +27,7 @@ const UpcomingWidgetContent = (): React.ReactElement => {
     <div className='flex flex-row overflow-x-scroll'>
       {data!.results.map((item: UpcomingResult) => {
         return (
-          <div key={item.id} className="grid auto-cols-max mr-2 ml-2 rounded-md text-xsm max-w-[250px] transition-all delay-25 hover:bg-red-600">
+          <div key={item.id} className="grid auto-cols-max mr-2 ml-2 rounded-md text-xsm max-w-[250px] transition-all delay-25 hover:bg-neutral-800">
             <Link href={`/movie/${item.id}`} passHref>
               <a>
                 <Image
