@@ -16,8 +16,6 @@ export const PopularWidget = (props: any): React.ReactElement => {
 const PopularWidgetContent = (): React.ReactElement => {
   const { data, error }: SWRResponse<PopularResponse, Error> = useSWR('/api/getpopular/1', fetcher);
 
-  console.log(data);
-
   if (!data && !error) return <RenderPopularSkeleton />;
   if (error) return <Error />;
   return (
