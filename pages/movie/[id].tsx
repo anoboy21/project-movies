@@ -98,7 +98,7 @@ const CastContent = ({ id }: { id: number }) => {
 
     const { data, error }: SWRResponse<CreditsResponse, Error> = useSWR(`/api/getcredits/${id}`, fetcher);
 
-    console.log(data);
+    // console.log(data);
 
     //TODO: Replace placeholder.com with something better
     if (!data && !error) return <ActorSkeletons />;
