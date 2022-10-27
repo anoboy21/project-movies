@@ -51,11 +51,11 @@ function SearchBar() {
         <div className='flex flex-row mb-1'>
           <input
             type="text"
-            className="block w-full grow px-4 py-2 rounded-tl-md rounded-bl-sm text-red-700 bg-white"
+            className="block w-full grow px-4 py-2 rounded-tl-md rounded-bl-md text-red-700 bg-white"
             placeholder="Search..."
           />
           <button
-            className="transition-all delay-50 px-4 text-white bg-red-600 rounded-tr-md hover:bg-red-800"
+            className="transition-all delay-50 px-4 text-white bg-red-600 rounded-tr-md rounded-br-md hover:bg-red-800"
           >
             Search
           </button>
