@@ -9,6 +9,7 @@ import { fetcher } from "..";
 import { CreditsResponse } from "../../types/GetCreditsTypes";
 import { Cast as CastContent } from "../../types/Cast";
 import Placeholder from "../../assets/MovieSVG.svg";
+import Link from "next/link";
 
 export default function MoviePage({ data }: { data: Movie }) {
     // console.log(data);
@@ -106,20 +107,26 @@ const CastContent = ({ id }: { id: number }) => {
     return (
         <div className="flex flex-row overflow-x-auto">
             {data.cast.map((cast: CastContent, index: number) => {
-                if (index <= 20) return (<div key={cast.id} className="grid auto-cols-max ml-2 mr-2">
-                    <Image
-                        src={cast.profile_path ? cast.profile_path : Placeholder.src}
-                        alt={`Image of ${cast.name}`}
-                        loader={PosterLoader}
-                        width={125}
-                        height={187}
-                        className="rounded-md w-[125px] h-[187px]"
-                    />
-                    <div className="w-[125px] truncate overflow-x-hidden text-neutral-100">
-                        <p className="truncate">{cast.name}</p>
-                        <p className="truncate text-neutral-400">{cast.character}</p>
-                    </div>
-                </div>
+                if (index <= 20) return (
+                    <Link key={cast.id} href={`/person/${cast.id}`} passHref>
+                        <a>
+                            <div className="grid auto-cols-max ml-1 mr-1 p-2 hover:bg-neutral-800 transition-all delay-50">
+                                <Image
+                                    src={cast.profile_path ? cast.profile_path : Placeholder.src}
+                                    alt={`Image of ${cast.name}`}
+                                    loader={PosterLoader}
+                                    width={125}
+                                    height={187}
+                                    className="rounded-md w-[125px] h-[187px]"
+                                />
+                                <div className="w-[125px] truncate overflow-x-hidden text-neutral-100">
+                                    <p className="truncate">{cast.name}</p>
+                                    <p className="truncate text-neutral-400">{cast.character}</p>
+                                </div>
+                            </div>
+                        </a>
+                    </Link>
+
                 );
             })}
         </div>
