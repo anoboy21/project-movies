@@ -7,12 +7,13 @@ import { Navbar } from "../../components/Navbar";
 import moment from "moment";
 import { fetcher } from "..";
 import { CreditsResponse } from "../../types/GetCreditsTypes";
-import { Cast as CastContent } from "../../types/Cast";
+import { Cast as CastWrapper } from "../../types/Cast";
 import Placeholder from "../../assets/MovieSVG.svg";
 import Link from "next/link";
+import { Fragment, useEffect, useState } from "react";
 
 export default function MoviePage({ data }: { data: Movie }) {
-    // console.log(data);
+    console.log(data);
     return (
         <div>
             <div style={{ backgroundImage: `linear-gradient(to right, rgba(24, 26, 27, 0.84), rgba(0,0,0, 0.8)), url(https://image.tmdb.org/t/p/original/${data.backdrop_path})` }}>
@@ -49,6 +50,10 @@ export default function MoviePage({ data }: { data: Movie }) {
                     <div className="text-lg font-medium">
                         <p className="inline text-red-600">{data.runtime} Minutes</p>
                         <p className="inline"> of runtime</p>
+                    </div>
+                    <div className="text-lg font-medium">
+                        <p className="inline text-red-600">{data.budget ? `${data.budget / 1000000}M$` : "Unknown "}</p>
+                        <p className="inline"> budget</p>
                     </div>
                 </div>
                 <br />
@@ -90,23 +95,39 @@ const CastWidget = ({ id }: { id: number }) => {
     return (
         <div>
             <p className="font-semibold text-2xl text-neutral-100 mb-3">Actors</p>
-            <CastContent id={id} />
+            <CastWrapper id={id} />
         </div>
     )
 }
 
-const CastContent = ({ id }: { id: number }) => {
+const CastWrapper = ({ id }: { id: number }) => {
 
     const { data, error }: SWRResponse<CreditsResponse, Error> = useSWR(`/api/getcredits/${id}`, fetcher);
-
     // console.log(data);
+
 
     //TODO: Replace placeholder.com with something better
     if (!data && !error) return <ActorSkeletons />;
     if (!data) return <Error />;
     return (
         <div className="flex flex-row overflow-x-auto">
-            {data.cast.map((cast: CastContent, index: number) => {
+            <CastContent data={data} />
+        </div>
+    )
+}
+
+const CastContent = ({ data }: { data: CreditsResponse }) => {
+    const [showMore, setShowMore] = useState(false);
+
+    useEffect(() => {
+        if (data.cast.length > 20) setShowMore(true);
+
+    }, [])
+
+
+    return (
+        <Fragment>
+            {data.cast.map((cast: CastWrapper, index: number) => {
                 if (index <= 20) return (
                     <Link key={cast.id} href={`/person/${cast.id}`} passHref>
                         <a>
@@ -126,15 +147,23 @@ const CastContent = ({ id }: { id: number }) => {
                             </div>
                         </a>
                     </Link>
-
                 );
             })}
-        </div>
+            {
+                showMore ?
+                    <Link href="#" passHref>
+                        <a className="flex items-center justify-center text-neutral-100 rounded-sm font-medium text-lg hover:bg-neutral-900 pl-12 pr-12">
+                            Show more
+                        </a>
+                    </Link>
+                    : <Fragment />
+            }
+        </Fragment>
     )
 }
 
 const Error = () => {
-    return(
+    return (
         <div className="flex flex-col justify-center items-center w-auto h-[252px]">
             <p className="font-semibold text-3xl text-neutral-100">Something went wrong...</p>
             <p className="font-semibold text-lg text-neutral-400">Please check your internet connection.</p>
