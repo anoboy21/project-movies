@@ -131,7 +131,7 @@ const CastContent = ({ data }: { data: CreditsResponse }) => {
                 if (index <= 20) return (
                     <Link key={cast.id} href={`/person/${cast.id}`} passHref>
                         <a>
-                            <div className="grid auto-cols-max ml-1 mr-1 p-2 hover:bg-neutral-800 transition-all delay-50">
+                            <div className="grid auto-cols-max ml-1 mr-1 p-2 hover:bg-neutral-900 rounded-sm transition-all delay-50">
                                 <Image
                                     src={cast.profile_path ? cast.profile_path : Placeholder.src}
                                     alt={`Image of ${cast.name}`}
