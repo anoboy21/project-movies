@@ -3,7 +3,7 @@ export interface Person {
     also_known_as:        string[];
     biography:            string;
     birthday:             Date;
-    deathday:             null;
+    deathday:             string | null;
     gender:               number;
     homepage:             string;
     id:                   number;
