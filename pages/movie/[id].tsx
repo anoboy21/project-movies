@@ -120,7 +120,7 @@ const CastContent = ({ data }: { data: CreditsResponse }) => {
     const [showMore, setShowMore] = useState(false);
 
     useEffect(() => {
-        if (data.cast.length > 20) setShowMore(true);
+        if (data.cast.length > 10) setShowMore(true);
 
     }, [])
 
@@ -128,7 +128,7 @@ const CastContent = ({ data }: { data: CreditsResponse }) => {
     return (
         <Fragment>
             {data.cast.map((cast: CastWrapper, index: number) => {
-                if (index <= 20) return (
+                if (index <= 10) return (
                     <Link key={cast.id} href={`/person/${cast.id}`} passHref>
                         <a>
                             <div className="grid auto-cols-max ml-1 mr-1 p-2 hover:bg-neutral-900 rounded-sm transition-all delay-50">
