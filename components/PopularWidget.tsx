@@ -16,8 +16,8 @@ export const PopularWidget = (props: any): React.ReactElement => {
 const PopularWidgetContent = (): React.ReactElement => {
   const { data, error }: SWRResponse<PopularResponse, Error> = useSWR('/api/getpopular/1', fetcher);
 
-  if (!data && !error) return <RenderPopularSkeleton />;
-  if (error) return <Error />;
+  if (!data && !error) return <PopularSkeletons />;
+  if (error) return <PopularError />;
   return (
     <div className='flex flex-row overflow-x-scroll md:scrollbar-thin md:scrollbar-track-gray-100 md:scrollbar-thumb-red-600 pb-5 md:ml-2 md:mr-2'>
       {data!.results.map((item: PopularResult) => {
@@ -62,7 +62,7 @@ const Metrics = ({ vote_average }: { vote_average: number }) => {
   )
 }
 
-const Error = () => {
+export const PopularError = () => {
   return (
     <div className='w-auto h-[451px] flex flex-col items-center justify-center'>
       <p className='font-semibold text-2xl text-neutral-100'>Something&apos;s not right.</p>
@@ -71,9 +71,10 @@ const Error = () => {
   )
 }
 
-const RenderPopularSkeleton = () => {
+//TODO: Fix Skeleton Sizing
+export const PopularSkeletons = () => {
   return (
-    <div className='flex flex-row overflow-x-scroll'>
+    <div className='flex flex-row overflow-x-scroll md:scrollbar-thin md:scrollbar-track-gray-100 md:scrollbar-thumb-red-600 pb-5 md:ml-2 md:mr-2'>
       <PopularSkeleton />
       <PopularSkeleton />
       <PopularSkeleton />

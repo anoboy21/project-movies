@@ -1,13 +1,12 @@
 import Image from 'next/future/image';
 import useSWR, { SWRResponse } from 'swr';
 import { PosterLoader } from '../PosterLoader';
-import { PopularResponse, PopularResult } from '../types/GetPopularTypes';
 import Link from 'next/link';
 import { fetcher } from '../pages/index';
 import { UpcomingResponse, UpcomingResult } from '../types/GetUpcomingTypes';
-import React, { Fragment } from 'react';
-import { ScriptProps } from 'next/script';
+import React from 'react';
 import moment from 'moment';
+import { PopularError, PopularSkeletons } from './PopularWidget';
 
 export const UpcomingWidget = (props: any): React.ReactElement => {
   
@@ -21,8 +20,8 @@ export const UpcomingWidget = (props: any): React.ReactElement => {
 const UpcomingWidgetContent = (): React.ReactElement => {
   const { data, error }: SWRResponse<UpcomingResponse, Error> = useSWR("/api/getupcoming/1", fetcher);
 
-  if (!data && !error) return <UpcomingSkeletons />;
-  if (error) return <Error />;
+  if (!data && !error) return <PopularSkeletons />;
+  if (error) return <PopularError />;
   return (
     <div className='flex flex-row overflow-x-scroll md:scrollbar-thin md:scrollbar-track-gray-100 md:scrollbar-thumb-red-600 pb-5 md:ml-2 md:mr-2'>
       {data!.results.map((item: UpcomingResult) => {
@@ -52,35 +51,35 @@ const UpcomingWidgetContent = (): React.ReactElement => {
   );
 };
 
-const Error = () => {
-  return (
-    <div className='w-auto h-[451px] flex flex-col items-center justify-center'>
-      <p className='font-semibold text-2xl text-neutral-100'>Something&apos;s not right.</p>
-      <p className='font-base text-lg text-neutral-400'>Please check your internet connection</p>
-    </div>
-  )
-}
+// const Error = () => {
+//   return (
+//     <div className='w-auto h-[451px] flex flex-col items-center justify-center'>
+//       <p className='font-semibold text-2xl text-neutral-100'>Something&apos;s not right.</p>
+//       <p className='font-base text-lg text-neutral-400'>Please check your internet connection</p>
+//     </div>
+//   )
+// }
 
-const UpcomingSkeletons = () => {
-  return (
-    <div className='flex flex-row overflow-x-scroll'>
-      <UpcomingSkeleton />
-      <UpcomingSkeleton />
-      <UpcomingSkeleton />
-      <UpcomingSkeleton />
-      <UpcomingSkeleton />
-    </div>
-  );
-};
+// const UpcomingSkeletons = () => {
+//   return (
+//     <div className='flex flex-row overflow-x-scroll'>
+//       <UpcomingSkeleton />
+//       <UpcomingSkeleton />
+//       <UpcomingSkeleton />
+//       <UpcomingSkeleton />
+//       <UpcomingSkeleton />
+//     </div>
+//   );
+// };
 
-const UpcomingSkeleton = () => {
-  return (
-    <div className='w-[250px] ml-2 mr-2'>
-      <div className='animate-pulse w-[250px] h-[375px] bg-gray-100 rounded-md'></div>
-      <div className='animate-pulse w-4/6 h-2 bg-gray-100 rounded-md mt-2'></div>
-      <div className='animate-pulse w-3/6 h-2 bg-gray-100 rounded-md mt-2 mb-3'></div>
-    </div>
-  );
-};
+// const UpcomingSkeleton = () => {
+//   return (
+//     <div className='w-[250px] ml-2 mr-2'>
+//       <div className='animate-pulse w-[250px] h-[375px] bg-gray-100 rounded-md'></div>
+//       <div className='animate-pulse w-4/6 h-2 bg-gray-100 rounded-md mt-2'></div>
+//       <div className='animate-pulse w-3/6 h-2 bg-gray-100 rounded-md mt-2 mb-3'></div>
+//     </div>
+//   );
+// };
 
 export default UpcomingWidget;
