@@ -27,8 +27,8 @@ const Home: NextPage = () => {
 
       <Navbar />
       <main className='bg-black'>
-        <div className='flex flex-col justify-center items-center h-[50vh] w-auto bg-black'>
-          <p className="font-semibold text-neutral-200 text-xl mb-5">All kinds of Shows that you&apos;ll enjoy</p>
+        <div className='flex flex-col justify-center h-[50vh] bg-black'>
+          <p className="font-semibold text-neutral-100 self-center text-xl mb-5">All kinds of Shows that you&apos;ll enjoy</p>
           <SearchBar />
         </div>
 
@@ -56,28 +56,22 @@ function SearchBar() {
 
 
   return (
-    <div className="flex items-center">
-      <div className="flex flex-col ml-4 mr-4">
-        <form onSubmit={handleSubmit} className='flex flex-row mb-1'>
-          <input
-            type="text"
-            className="block w-full grow px-4 py-2 rounded-tl-md rounded-bl-md text-red-700 bg-white"
-            id="query"
-            placeholder="Search..."
-            onChange={(e) => setQuery(e.target.value)}
-            required
-          />
-          <button
-            className="transition-all delay-50 px-4 text-white bg-red-600 rounded-tr-md rounded-br-md hover:bg-red-800"
-            type={"submit"}
-          >
-            Search
-          </button>
-        </form>
-
-        {/* <AutoComplete /> */}
-      </div>
-    </div>
+    <form onSubmit={handleSubmit} className='flex flex-row ml-4 mr-4 mb-1 md:justify-center'>
+      <input
+        type="text"
+        className="block grow md:grow-0 px-4 py-2 md:w-[80%] rounded-tl-sm rounded-bl-sm text-red-600 bg-white"
+        id="query"
+        placeholder="..."
+        onChange={(e) => setQuery(e.target.value)}
+        required
+      />
+      <button
+        className="transition-all delay-50 px-4 text-white bg-red-600 rounded-tr-sm rounded-br-sm hover:bg-red-800"
+        type={"submit"}
+      >
+        Search
+      </button>
+    </form>
   );
 }
 
