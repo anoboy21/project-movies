@@ -4,12 +4,13 @@ import { Navbar } from '../components/Navbar';
 import { PopularWidget } from '../components/PopularWidget';
 import { Movie } from '../types/Movie';
 import { UpcomingWidget } from '../components/UpcomingWidget';
-import { Fragment } from 'react';
+import { FormEventHandler, Fragment, useState } from 'react';
 import useSWR from 'swr';
 import { Result } from '../types/MultiSearchTypes';
 import Image from 'next/future/image';
 import { PosterLoader } from '../PosterLoader';
 import Placeholder from "../assets/MovieSVG.svg";
+import { useRouter } from 'next/router';
 
 // @ts-ignore
 export const fetcher = (...args: any[]) => fetch(...args).then(res => res.json());
@@ -45,22 +46,38 @@ const Home: NextPage = () => {
 //TODO: Improve Search button
 //TODO: Finish autocomplete in the future
 function SearchBar() {
+
+  const [query, setQuery] = useState("");
+  const router = useRouter();
+
+  const handleSubmit: FormEventHandler = (event) => {
+    event.preventDefault();
+
+    // console.log(event, query);
+    router.push(`/search/${query}/1`);
+  }
+
+
   return (
     <div className="flex items-center">
       <div className="flex flex-col ml-4 mr-4">
-        <div className='flex flex-row mb-1'>
+        <form onSubmit={handleSubmit} className='flex flex-row mb-1'>
           <input
             type="text"
             className="block w-full grow px-4 py-2 rounded-tl-md rounded-bl-md text-red-700 bg-white"
+            id="query"
             placeholder="Search..."
+            onChange={(e) => setQuery(e.target.value)}
+            required
           />
           <button
             className="transition-all delay-50 px-4 text-white bg-red-600 rounded-tr-md rounded-br-md hover:bg-red-800"
+            type={"submit"}
           >
             Search
           </button>
+        </form>
 
-        </div>
         {/* <AutoComplete /> */}
       </div>
     </div>
@@ -77,16 +94,16 @@ const AutoComplete = () => {
   return (
     <div className='bg-white text-gray-600 w-auto h-40 overflow-y-scroll z-10'>
       {data.results.map((queryItem: Result, index: number) => {
-        if (index <=   10) return (
+        if (index <= 10) return (
           <div key={index} className="w-auto h-10 border-b-4 flex justify-between">
             <p className=''>{queryItem.title || queryItem.name}</p>
-            <Image 
-            src={queryItem.backdrop_path? queryItem.backdrop_path : Placeholder.src}
-            loader={PosterLoader}
-            alt={`poster of ${queryItem.title}`}
-            height={64}
-            width={64}
-            className=""
+            <Image
+              src={queryItem.backdrop_path ? queryItem.backdrop_path : Placeholder.src}
+              loader={PosterLoader}
+              alt={`poster of ${queryItem.title}`}
+              height={64}
+              width={64}
+              className=""
             />
           </div>
         ); else return;
