@@ -15,6 +15,7 @@ import { useRouter } from 'next/router';
 // @ts-ignore
 export const fetcher = (...args: any[]) => fetch(...args).then(res => res.json());
 
+//TODO: Create a Skeleton Component for similar Widgets (Popular, Upcoming, people...) 
 const Home: NextPage = () => {
 
   return (
@@ -40,7 +41,6 @@ const Home: NextPage = () => {
   )
 }
 
-//TODO: Improve Search button
 //TODO: Finish autocomplete in the future
 function SearchBar() {
 
