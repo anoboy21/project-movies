@@ -22,7 +22,7 @@ const PopularWidgetContent = (): React.ReactElement => {
     <div className='flex flex-row overflow-x-scroll md:scrollbar-thin md:scrollbar-track-gray-100 md:scrollbar-thumb-red-600 pb-5 md:ml-2 md:mr-2'>
       {data!.results.map((item: PopularResult) => {
         return (
-          <div key={item.id} className="grid auto-cols-max mr-2 ml-2 rounded-sm text-xsm max-w-[250px] transition-all delay-10 hover:bg-neutral-900">
+          <div key={item.id} className="grid auto-cols-max mr-2 ml-2 p-2 rounded-sm text-xsm transition-all delay-10 hover:bg-neutral-900">
             <Link href={`/movie/${item.id}`} passHref>
               <a>
                 <Image

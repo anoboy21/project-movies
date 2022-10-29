@@ -27,7 +27,7 @@ const UpcomingWidgetContent = (): React.ReactElement => {
     <div className='flex flex-row overflow-x-scroll md:scrollbar-thin md:scrollbar-track-gray-100 md:scrollbar-thumb-red-600 pb-5 md:ml-2 md:mr-2'>
       {data!.results.map((item: UpcomingResult) => {
         return (
-          <div key={item.id} className="grid auto-cols-max mr-2 ml-2 rounded-sm text-xsm max-w-[250px] transition-all delay-25 hover:bg-neutral-900">
+          <div key={item.id} className="grid auto-cols-max mr-2 ml-2 p-2 max-h-[463px] rounded-sm text-xsm transition-all delay-10 hover:bg-neutral-900">
             <Link href={`/movie/${item.id}`} passHref>
               <a>
                 <Image
@@ -37,7 +37,7 @@ const UpcomingWidgetContent = (): React.ReactElement => {
                   width={250}
                   height={375}
                   loading={"lazy"}
-                  className="rounded-md h-[375px]" />
+                  className="rounded-md h-[375px] max-w-[250px]" />
                 <div className='flex flex-col grow mt-2 max-w-[250px]'>
                   <p className='font-medium text-lg ml-2 pb-2 text-gray-100 truncate'>{item.title}</p>
                   <p className='font-medium text-md ml-2 pb-2 text-gray-300 justify-end'>{moment(item.release_date).startOf("day").fromNow()}</p>
