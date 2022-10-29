@@ -15,9 +15,6 @@ import { useRouter } from 'next/router';
 // @ts-ignore
 export const fetcher = (...args: any[]) => fetch(...args).then(res => res.json());
 
-//TODO: Change default scrollbar
-
-
 const Home: NextPage = () => {
 
   return (
