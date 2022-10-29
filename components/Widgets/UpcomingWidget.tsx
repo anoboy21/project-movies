@@ -1,9 +1,9 @@
 import Image from 'next/future/image';
 import useSWR, { SWRResponse } from 'swr';
-import { PosterLoader } from '../PosterLoader';
+import { PosterLoader } from '../../PosterLoader';
 import Link from 'next/link';
-import { fetcher } from '../pages/index';
-import { UpcomingResponse, UpcomingResult } from '../types/GetUpcomingTypes';
+import { fetcher } from '../../pages/index';
+import { UpcomingResponse, UpcomingResult } from '../../types/GetUpcomingTypes';
 import React from 'react';
 import moment from 'moment';
 import { PopularError, PopularSkeletons } from './PopularWidget';

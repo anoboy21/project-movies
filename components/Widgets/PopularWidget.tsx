@@ -1,9 +1,9 @@
 import Image from 'next/future/image';
 import useSWR, { SWRResponse } from 'swr';
-import { PosterLoader } from '../PosterLoader';
-import { PopularResponse, PopularResult } from '../types/GetPopularTypes';
+import { PosterLoader } from '../../PosterLoader';
+import { PopularResponse, PopularResult } from '../../types/GetPopularTypes';
 import Link from 'next/link';
-import { fetcher } from '../pages/index';
+import { fetcher } from '../../pages/index';
 
 export const PopularWidget = (props: any): React.ReactElement => {
   return (
@@ -53,7 +53,7 @@ const Metrics = ({ vote_average }: { vote_average: number }) => {
 
   return (
     <div className='flex flex-row items-center justify-between mr-2 ml-2 gap-3'>
-      <div className='h-4 w-full bg-neutral-900 rounded-sm flex items-center'>
+      <div className='h-4 w-full bg-neutral-800 rounded-sm flex items-center'>
         <span className={`inline-block relative bg-red-600 h-2 ml-1 mr-2`} style={{ width: `${percentage}%` }}></span>
       </div>
       <p className='font-semibold text-lg text-red-600'>{percentage}%</p>
@@ -86,10 +86,10 @@ export const PopularSkeletons = () => {
 
 const PopularSkeleton = () => {
   return (
-    <div className='w-[250px] ml-2 mr-2'>
+    <div className='ml-2 mr-2 p-2 h-[463px]'>
       <div className='animate-pulse w-[250px] h-[375px] bg-gray-100 rounded-md'></div>
-      <div className='animate-pulse w-4/6 h-2 bg-gray-100 rounded-md mt-2'></div>
-      <div className='animate-pulse w-3/6 h-2 bg-gray-100 rounded-md mt-2 mb-3'></div>
+      <div className='animate-pulse w-4/6 h-3 mb-3 bg-gray-100 rounded-md mt-4'></div>
+      <div className='animate-pulse w-3/6 h-3 bg-gray-100 rounded-md mt-2 mb-3'></div>
     </div>
   );
 };
