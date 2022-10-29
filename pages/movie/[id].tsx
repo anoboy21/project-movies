@@ -55,6 +55,10 @@ export default function MoviePage({ data }: { data: Movie }) {
                         <p className="inline text-red-600">{data.budget ? `${data.budget / 1000000}M$` : "Unknown "}</p>
                         <p className="inline"> budget</p>
                     </div>
+                    <div className="text-lg font-medium">
+                        <p className="inline text-red-600">{data.revenue ? `${(data.revenue / 1000000).toFixed(2)}M$` : "Unknown "}</p>
+                        <p className="inline"> revenue</p>
+                    </div>
                 </div>
                 <br />
                 <div className="">
