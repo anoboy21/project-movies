@@ -58,7 +58,7 @@ export default function MoviePage({ data }: { data: Movie }) {
                 </div>
                 <br />
                 <div className="">
-                    <p className="font-semibold text-2xl text-neutral-100">Overview</p>
+                    <p className="font-semibold text-2xl text-neutral-100 mb-3">Overview</p>
                     <p className="text-neutral-300">{data.overview}</p>
                 </div>
                 <br />
@@ -110,7 +110,7 @@ const CastWrapper = ({ id }: { id: number }) => {
     if (!data && !error) return <ActorSkeletons />;
     if (!data) return <Error />;
     return (
-        <div className="flex flex-row overflow-x-auto">
+        <div className="flex flex-row overflow-x-auto md:scrollbar-thin md:scrollbar-track-gray-100 md:scrollbar-thumb-red-600 pb-5 md:ml-2 md:mr-2">
             <CastContent data={data} />
         </div>
     )

@@ -20,7 +20,7 @@ export const fetcher = (...args: any[]) => fetch(...args).then(res => res.json()
 const Home: NextPage = () => {
 
   return (
-    <div className='thinScrollBar'>
+    <div>
       <Head>
         <title>Project Movies</title>
         <meta name="description" content="Project Movies - This is a placeholder" />
