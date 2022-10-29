@@ -19,12 +19,13 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
 
     //TODO: handle when there is no query, Error page
     let {query} = context.query;
+    let page = "1";
 
     //This page is redundent currently since next handles it automatically,
     // might be better to query!
     if(!query) return <p>404 ERROR</p>;
-
-    const page = query[1];
+    
+    if(query[1]) page = query[1];
     query = query[0];
     // console.log(query, page);
 
