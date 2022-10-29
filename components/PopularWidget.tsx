@@ -31,6 +31,7 @@ const PopularWidgetContent = (): React.ReactElement => {
                   alt={`${item.title} poster`}
                   width={250}
                   height={375}
+                  loading="lazy"
                   className="rounded-md" />
                 <div className='flex flex-col grow mt-2 max-w-[250px]'>
                   <p className='font-medium text-lg ml-2 pb-2 text-gray-100 truncate'>{item.title}</p>
