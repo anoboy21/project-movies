@@ -9,11 +9,7 @@ import Link from "next/link";
 import { Navbar } from "../../components/Navbar";
 import { useRouter } from "next/router";
 import useSWR, { SWRResponse } from "swr";
-
-
-//TODO: MOVE FETCHER FROM INDEX TO ITS OWN FOLDER
-//@ts-ignore
-export const fetcher = (...args: any[]) => fetch(...args).then(res => res.json());
+import fetcher from "../../Fetcher";
 
 export const Search = ({ query }: { query: string }) => {
 
@@ -98,9 +94,9 @@ const SearchBox = ({ prevQuery, pageLimit, page, setPage }: { prevQuery: string,
                         <button onClick={(e) => {
                             e.preventDefault()
                             // console.log(query);
-                            router.push({pathname: "/search/[query]/1", query: { query: query }})
-                            
-                            }} className="mt-3 rounded-sm bg-red-500 pl-3 pr-3 pt-1 pb-1">Search</button>
+                            router.push({ pathname: "/search/[query]/1", query: { query: query } })
+
+                        }} className="mt-3 rounded-sm bg-red-500 pl-3 pr-3 pt-1 pb-1">Search</button>
                     </form>
                 </div>
                 <div>

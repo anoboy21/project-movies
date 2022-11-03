@@ -5,7 +5,7 @@ import Image from "next/future/image";
 import { PosterLoader } from "../../PosterLoader";
 import { Navbar } from "../../components/Navbar";
 import moment from "moment";
-import { fetcher } from "..";
+import fetcher from "../../Fetcher";
 import { CreditsResponse } from "../../types/GetCreditsTypes";
 import { Cast as CastWrapper } from "../../types/Cast";
 import Placeholder from "../../assets/MovieSVG.svg";

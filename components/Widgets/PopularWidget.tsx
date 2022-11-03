@@ -3,7 +3,7 @@ import useSWR, { SWRResponse } from 'swr';
 import { PosterLoader } from '../../PosterLoader';
 import { PopularResponse, PopularResult } from '../../types/GetPopularTypes';
 import Link from 'next/link';
-import { fetcher } from '../../pages/index';
+import fetcher from '../../Fetcher';
 
 export const PopularWidget = (props: any): React.ReactElement => {
   return (
