@@ -174,7 +174,7 @@ const SearchBox = ({ prevQuery, pageLimit, page, setPage }: { prevQuery: string,
         // TODO: ALLOW THE USER TO SELECT THE PAGE DIRECTLY, PROMPT ERROR IF HE INSERTS a PAGE BIGGER THAN LIMIT
     }
 
-    const handleOnClick = (e: MouseEvent) => {
+    const handleOnClick = (e: any) => {
         e.preventDefault();
         router.push({ pathname: "/search/[query]", query: { query: query } });
     }
@@ -184,20 +184,20 @@ const SearchBox = ({ prevQuery, pageLimit, page, setPage }: { prevQuery: string,
         <Fragment>
             <div className="flex flex-col p-3 border-4 border-red-600 rounded-sm border-t-0 border-l-0 border-r-0 w-full md:border-2 md:w-4/6 md:m-3">
                 <div className="text-lg">
-                    <label title="query" className="font-medium inline">{`Searched Query: `}</label>
-                    <form>
+                    {/* <label title="query" className="font-medium inline">{`Searched Query: `}</label> */}
+                    <form className="flex flex-col justify-between">
                         <input title="query" type={"text"} defaultValue={query} onChange={(e) => setQuery(e.target.value)} className="font-semibold text-red-600 p-1 rounded-sm bg-transparent border-b-2" />
                         <button onClick={(e) => handleOnClick(e)} className="mt-3 rounded-sm bg-red-500 pl-3 pr-3 pt-1 pb-1">Search</button>
                     </form>
                 </div>
-                <div>
-                    <div className="flex flex-row items-center mt-4 text-lg font-medium">
+                <div className="flex flex-row justify-between items-center mt-4 mb-2">
+                    <div className="flex flex-row items-center text-lg font-medium">
                         <p className="inline">{`Page`}</p>
                         <button className={["text-xl font-medium rounded-sm ml-2 mr-1 pb-1 pl-1 pr-1 bg-red-600 text-neutral-100 disabled:bg-neutral-700"].join(" ")} disabled={page == 1 ? true : false} id="left" onClick={handlePageButtons}>{"<"}</button>
                         <p className="text-xl font-semibold ml-2 mr-2 text-red-600 inline">{page}</p>
                         <button className="text-xl font-medium rounded-sm ml-1 mr-1 pb-1 pl-1 pr-1 bg-red-600 text-neutral-100 disabled:bg-neutral-700" id="right" disabled={page == pageLimit ? true : false} onClick={handlePageButtons}>{">"}</button>
                     </div>
-                    <p className="text-sm font-normal text-neutral-400 mt-1">{
+                    <p className="text-sm font-normal text-neutral-400">{
                         pageLimit ? `${pageLimit} Total Pages`
                             : "loading..."
                     }</p>
@@ -205,7 +205,6 @@ const SearchBox = ({ prevQuery, pageLimit, page, setPage }: { prevQuery: string,
             </div>
         </Fragment>
     );
-
 }
 
 
