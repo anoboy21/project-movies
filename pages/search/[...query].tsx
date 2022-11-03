@@ -14,6 +14,9 @@ import { TVShow } from "../../types/TVShow";
 import { Movie } from "../../types/Movie";
 import { Person } from "../../types/Person";
 
+function isReleased(release_date: Date) { return moment() < moment(release_date); }
+
+
 export const Search = ({ query }: { query: string }) => {
 
     const [page, setPage] = useState(1);
@@ -83,7 +86,6 @@ const MultiSearchTVShowCard = ({ result }: { result: TVShow & ResultElements }) 
     );
 }
 
-function isReleased(release_date: Date) { return moment() < moment(release_date); }
 
 const MultiSearchMovieCard = ({ result }: { result: Movie & ResultElements }) => {
     return (
@@ -130,13 +132,10 @@ const MultiSearchPersonCard = ({ result }: { result: Person & ResultElements }) 
                     loading="lazy"
                 />
                 <div className="grow flex flex-col justify-between font-medium text-base ml-2 mt-2">
-
                     <div>
                         <p>{result.name}</p>
                         <p>{result.gender == 1 ? "Actress" : "Actor"}</p>
-                        {/* <HandleMediaType result={result} /> */}
                     </div>
-
                     <Metrics vote_average={result.popularity} />
                 </div>
             </a>
