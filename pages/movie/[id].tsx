@@ -104,6 +104,8 @@ const CastWidget = ({ id }: { id: number }) => {
     )
 }
 
+//TODO: Build "Show More" Button search
+// pass cast data and movie id as props
 const CastWrapper = ({ id }: { id: number }) => {
 
     const { data, error }: SWRResponse<CreditsResponse, Error> = useSWR(`/api/getcredits/${id}`, fetcher);
