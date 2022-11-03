@@ -58,7 +58,7 @@ const SearchContent = ({ data, error }: { data: MultiSearchResponse | undefined,
 const MultiSearchTVShowCard = ({ result }: { result: TVShow & ResultElements }) => {
     return (
         <Link key={result.id} href={`/tv/${result.id}`} passHref>
-            <a className="flex flex-row rounded-md p-3 hover:bg-neutral-900">
+            <a className="flex flex-row rounded-md p-3 hover:bg-neutral-900 gap-1">
                 <Image
                     src={result.poster_path ? result.poster_path : Placeholder.src}
                     loader={PosterLoader}
@@ -90,7 +90,7 @@ const MultiSearchTVShowCard = ({ result }: { result: TVShow & ResultElements }) 
 const MultiSearchMovieCard = ({ result }: { result: Movie & ResultElements }) => {
     return (
         <Link key={result.id} href={`/movie/${result.id}`} passHref>
-            <a className="flex flex-row rounded-md p-3 hover:bg-neutral-900">
+            <a className="flex flex-row rounded-md p-3 hover:bg-neutral-900 gap-1">
                 <Image
                     src={result.poster_path ? result.poster_path : Placeholder.src}
                     loader={PosterLoader}
@@ -119,9 +119,10 @@ const MultiSearchMovieCard = ({ result }: { result: Movie & ResultElements }) =>
 }
 
 const MultiSearchPersonCard = ({ result }: { result: Person & ResultElements }) => {
+    //TODO: Add case for Directors not just Actors and Actresses
     return (
         <Link key={result.id} href={`/person/${result.id}`} passHref>
-            <a className="flex flex-row rounded-md p-3 hover:bg-neutral-900">
+            <a className="flex flex-row rounded-md p-3 hover:bg-neutral-900 gap-1">
                 <Image
                     src={result.profile_path ? result.profile_path : Placeholder.src}
                     loader={PosterLoader}
@@ -136,7 +137,6 @@ const MultiSearchPersonCard = ({ result }: { result: Person & ResultElements }) 
                         <p>{result.name}</p>
                         <p>{result.gender == 1 ? "Actress" : "Actor"}</p>
                     </div>
-                    <Metrics vote_average={result.popularity} />
                 </div>
             </a>
         </Link>
@@ -161,7 +161,6 @@ const Metrics = ({ vote_average }: { vote_average: number }) => {
 const SearchBox = ({ prevQuery, pageLimit, page, setPage }: { prevQuery: string, pageLimit: number, page: number, setPage: Dispatch<SetStateAction<number>> }) => {
 
     const [query, setQuery] = useState(prevQuery);
-    // const [page, setPage] = useState(1);
     const router = useRouter();
 
 
@@ -175,6 +174,11 @@ const SearchBox = ({ prevQuery, pageLimit, page, setPage }: { prevQuery: string,
         // TODO: ALLOW THE USER TO SELECT THE PAGE DIRECTLY, PROMPT ERROR IF HE INSERTS a PAGE BIGGER THAN LIMIT
     }
 
+    const handleOnClick = (e: MouseEvent) => {
+        e.preventDefault();
+        router.push({ pathname: "/search/[query]", query: { query: query } });
+    }
+
     //TODO: when clicking on search button, check if the target value is the same as current value, if so DO NOT push with router
     return (
         <Fragment>
@@ -183,12 +187,7 @@ const SearchBox = ({ prevQuery, pageLimit, page, setPage }: { prevQuery: string,
                     <label title="query" className="font-medium inline">{`Searched Query: `}</label>
                     <form>
                         <input title="query" type={"text"} defaultValue={query} onChange={(e) => setQuery(e.target.value)} className="font-semibold text-red-600 p-1 rounded-sm bg-transparent border-b-2" />
-                        <button onClick={(e) => {
-                            e.preventDefault()
-                            // console.log(query);
-                            router.push({ pathname: "/search/[query]/1", query: { query: query } })
-
-                        }} className="mt-3 rounded-sm bg-red-500 pl-3 pr-3 pt-1 pb-1">Search</button>
+                        <button onClick={(e) => handleOnClick(e)} className="mt-3 rounded-sm bg-red-500 pl-3 pr-3 pt-1 pb-1">Search</button>
                     </form>
                 </div>
                 <div>
