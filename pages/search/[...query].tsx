@@ -1,5 +1,5 @@
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next"
-import { Dispatch, Fragment, SetStateAction, useEffect, useRef, useState } from "react"
+import { Dispatch, Fragment, RefObject, SetStateAction, useEffect, useRef, useState } from "react"
 import Image from "next/future/image";
 import { PosterLoader } from "../../PosterLoader";
 import { isMovie, isPerson, isTVShow, MediaType, MultiSearchResponse, Result, ResultElements } from "../../types/MultiSearchTypes";
@@ -161,25 +161,42 @@ const Metrics = ({ vote_average }: { vote_average: number }) => {
 const SearchBox = ({ prevQuery, pageLimit, page, setPage }: { prevQuery: string, pageLimit: number, page: number, setPage: Dispatch<SetStateAction<number>> }) => {
 
     const [query, setQuery] = useState(prevQuery);
-    const router = useRouter();
 
+    // Used for the shadow Page changing without messing with the actual Page
+    const [localPage, setLocalPage] = useState(page);
+    const router = useRouter();
+    const pageRef: RefObject<HTMLInputElement> = useRef(null);
 
     const handlePageButtons = (e: any) => {
 
+        //checks ID, depending on ID, Updates Page
         if (e.target.id === 'right') setPage(page + 1);
         else if (e.target.id === "left") setPage(page - 1);
-
+        else if (e.target.id === "jump") setPage(localPage);
         // TODO: When you do decide to implement the function
         // GIVE THE DATA LOAD A DELAY SO THAT THE USER DOES NOT SPAM THE BUTTON SENDING POINTLESS REQUESTS
-        // TODO: ALLOW THE USER TO SELECT THE PAGE DIRECTLY, PROMPT ERROR IF HE INSERTS a PAGE BIGGER THAN LIMIT
     }
 
-    const handleOnClick = (e: any) => {
+    const handleOnSearchBtnClick = (e: any) => {
         e.preventDefault();
         router.push({ pathname: "/search/[query]", query: { query: query } });
     }
 
-    //TODO: when clicking on search button, check if the target value is the same as current value, if so DO NOT push with router
+    useEffect(() => {
+
+        //TODO: add DOCS to clarify what's going on
+        // checks if reference to the Page input is valid, if so
+        // set its content to the current Page AND set LocalPage to Page
+        if (!pageRef.current) throw Error("PageRef is not set!");
+        else {
+            pageRef.current.value = page.toString()
+            setLocalPage(page);
+        };
+
+    }, [page])
+
+    //TODO: when clicking on search button, check if the target value is the same as current value, if so DO NOT push with router    
+    //TODO: REFACTOR
     return (
         <Fragment>
             <div className="flex flex-col p-3 border-4 border-red-600 rounded-sm border-t-0 border-l-0 border-r-0 w-full md:border-2 md:w-4/6 md:m-3">
@@ -187,16 +204,24 @@ const SearchBox = ({ prevQuery, pageLimit, page, setPage }: { prevQuery: string,
                     {/* <label title="query" className="font-medium inline">{`Searched Query: `}</label> */}
                     <form className="flex flex-col justify-between">
                         <input title="query" type={"text"} defaultValue={query} onChange={(e) => setQuery(e.target.value)} className="font-semibold text-red-600 p-1 rounded-sm bg-transparent border-b-2" />
-                        <button onClick={(e) => handleOnClick(e)} className="mt-3 rounded-sm bg-red-500 pl-3 pr-3 pt-1 pb-1">Search</button>
+                        <button onClick={(e) => handleOnSearchBtnClick(e)} className="mt-3 font-medium rounded-sm bg-red-500 pl-3 pr-3 pt-1 pb-1">Search</button>
                     </form>
                 </div>
-                <div className="flex flex-row justify-between items-center mt-4 mb-2">
-                    <div className="flex flex-row items-center text-lg font-medium">
-                        <p className="inline">{`Page`}</p>
-                        <button className={["text-xl font-medium rounded-sm ml-2 mr-1 pb-1 pl-1 pr-1 bg-red-600 text-neutral-100 disabled:bg-neutral-700"].join(" ")} disabled={page == 1 ? true : false} id="left" onClick={handlePageButtons}>{"<"}</button>
-                        <p className="text-xl font-semibold ml-2 mr-2 text-red-600 inline">{page}</p>
-                        <button className="text-xl font-medium rounded-sm ml-1 mr-1 pb-1 pl-1 pr-1 bg-red-600 text-neutral-100 disabled:bg-neutral-700" id="right" disabled={page == pageLimit ? true : false} onClick={handlePageButtons}>{">"}</button>
-                    </div>
+
+                <div className="flex flex-col justify-center items-start mt-6 mb-1">
+                    <form className="flex flex-row w-full justify-between text-lg font-medium" onSubmit={(e) => e.preventDefault()}>
+                        <div>
+                            <p className="inline">{`Page`}</p>
+                            <button className={["text-xl font-medium rounded-sm ml-2 mr-1 pb-1 pl-1 pr-1 bg-red-600 text-neutral-100 disabled:bg-neutral-700"].join(" ")} disabled={page == 1 ? true : false} id="left" onClick={handlePageButtons}>{"<"}</button>
+                            <input type={"number"} defaultValue={page} onChange={(e) => {
+                                setLocalPage(parseInt(e.target.value))
+                                console.log(e.target.value);
+                            }} title="page" ref={pageRef} className="text-center text-xl font-semibold ml-2 mr-2 text-red-600 inline w-6 bg-transparent"></input>
+                            <button className="text-xl font-medium rounded-sm ml-1 mr-1 pb-1 pl-1 pr-1 bg-red-600 text-neutral-100 disabled:bg-neutral-700" id="right" disabled={page == pageLimit ? true : false} onClick={handlePageButtons}>{">"}</button>
+                        </div>
+
+                        <button id={"jump"} className="mr-2 bg-red-500 text-neutral-100 pl-3 pr-3 pt-1 pb-1 rounded-sm disabled:bg-neutral-700" disabled={localPage > pageLimit || localPage == page} onClick={handlePageButtons}>Jump to Page</button>
+                    </form>
                     <p className="text-sm font-normal text-neutral-400">{
                         pageLimit ? `${pageLimit} Total Pages`
                             : "loading..."
@@ -209,22 +234,9 @@ const SearchBox = ({ prevQuery, pageLimit, page, setPage }: { prevQuery: string,
 
 
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
-
-
     //TODO: handle when there is no query, Error page
     let { query } = context.query;
     query = query![0];
-    // let page = "1";
-
-    //This page is redundent currently since next handles it automatically,
-    // might be better to query!
-    // if (!query) return <p>404 ERROR</p>;
-
-    // if (query[1]) page = query[1];
-    // query = query[0];
-
-    // let request = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${process.env.TMDB_API_KEY}&language=en-US&query=${query}&page=1&include_adult=false`);
-    // const data = await request.json();
 
     return {
         props: {
