@@ -1,3 +1,7 @@
+import { Movie } from "./Movie";
+import { Person } from "./Person";
+import { TVShow } from "./TVShow";
+
 export interface MultiSearchResponse {
     page:          number;
     results:       Result[];
@@ -5,31 +9,28 @@ export interface MultiSearchResponse {
     total_results: number;
 }
 
-export interface Result {
-    backdrop_path:     null | string;
-    first_air_date?:   Date;
-    genre_ids:         number[];
-    id:                number;
-    media_type:        MediaType;
-    name?:             string;
-    origin_country?:   string[];
-    original_language: OriginalLanguage;
-    original_name?:    string;
-    overview:          string;
-    popularity:        number;
-    poster_path:       string;
-    vote_average:      number;
-    vote_count:        number;
-    adult?:            boolean;
-    original_title?:   string;
-    release_date?:     Date;
-    title?:            string;
-    video?:            boolean;
+export interface ResultElements {
+    media_type: MediaType;
+}
+
+export type Result = Movie & ResultElements | Person & ResultElements | TVShow & ResultElements;
+
+export function isMovie(result: Result): result is Movie & ResultElements {
+    return (result as Movie & ResultElements).media_type === "movie";
+}
+
+export function isTVShow(result: Result): result is TVShow & ResultElements {
+    return (result as TVShow & ResultElements).media_type === "tv";
+}
+
+export function isPerson(result: Result): result is TVShow & ResultElements {
+    return (result as Person & ResultElements).media_type === "person";
 }
 
 export enum MediaType {
     Movie = "movie",
     Tv = "tv",
+    Person = "person"
 }
 
 export enum OriginalLanguage {
