@@ -12,6 +12,9 @@ import Placeholder from "../../assets/MovieSVG.svg";
 import Link from "next/link";
 import { Fragment, useEffect, useState } from "react";
 
+
+//TODO: Add case for when The movie is not released yet
+//TODO: Add placeholder image for movie poster
 export default function MoviePage({ data }: { data: Movie }) {
     console.log(data);
     return (
