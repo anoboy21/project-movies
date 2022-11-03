@@ -8,7 +8,6 @@ import { NextApiRequest, NextApiResponse } from "next";
  * @param res 
  */
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    // Returns a List, first element is the parent folder NAME, in this case: getpopular
     const slugs = req.query;
     const query = slugs.args![0];
     let page = slugs.args![1];
