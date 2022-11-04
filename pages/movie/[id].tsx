@@ -111,7 +111,7 @@ const CastWidget = ({ id }: { id: number }) => {
 // pass cast data and movie id as props
 const CastWrapper = ({ id }: { id: number }) => {
 
-    const { data, error }: SWRResponse<CreditsResponse, Error> = useSWR(`/api/getcredits/${id}`, fetcher);
+    const { data, error }: SWRResponse<CreditsResponse, Error> = useSWR(`/api/getmoviecredits/${id}`, fetcher);
     // console.log(data);
 
 
