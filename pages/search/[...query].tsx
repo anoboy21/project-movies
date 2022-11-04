@@ -216,11 +216,11 @@ const SearchBox = ({ prevQuery, pageLimit, page, setPage }: { prevQuery: string,
                             <input type={"number"} defaultValue={page} onChange={(e) => {
                                 setLocalPage(parseInt(e.target.value))
                                 console.log(e.target.value);
-                            }} title="page" ref={pageRef} className="text-center text-xl font-semibold ml-2 mr-2 text-red-600 inline w-6 bg-transparent"></input>
+                            }} min={1} max={pageLimit ? pageLimit : 1000} title="page" ref={pageRef} className="text-center text-xl font-semibold ml-2 mr-2 text-red-600 inline w-10 bg-transparent"></input>
                             <button className="text-xl font-medium rounded-sm ml-1 mr-1 pb-1 pl-1 pr-1 bg-red-600 text-neutral-100 disabled:bg-neutral-700" id="right" disabled={page == pageLimit ? true : false} onClick={handlePageButtons}>{">"}</button>
                         </div>
 
-                        <button id={"jump"} className="mr-2 bg-red-500 text-neutral-100 pl-3 pr-3 pt-1 pb-1 rounded-sm disabled:bg-neutral-700" disabled={localPage > pageLimit || localPage == page} onClick={handlePageButtons}>Jump to Page</button>
+                        <button id={"jump"} className="bg-red-500 text-neutral-100 pl-3 pr-3 pt-1 pb-1 rounded-sm disabled:bg-neutral-700" disabled={localPage > pageLimit || localPage == page} onClick={handlePageButtons}>Jump to Page</button>
                     </form>
                     <p className="text-sm font-normal text-neutral-400">{
                         pageLimit ? `${pageLimit} Total Pages`
