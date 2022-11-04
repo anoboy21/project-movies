@@ -34,26 +34,62 @@ export const Search = ({ query }: { query: string }) => {
 
 const SearchContent = ({ data, error }: { data: MultiSearchResponse | undefined, error: Error | undefined }) => {
 
-    console.log("data: ", data);
+    // console.log("data: ", data);
 
     //TODO: Port Searchbox out of SearchContent
     //NOTE THE STATE ISSUES
 
-    if (!data && !error) return <p>Loading....</p>;
+    // return <MultiSearchSkeletons />;
+    if (!data && !error) return <MultiSearchSkeletons />;
     if (!data) return <p>Error</p>;
     return (
         <Fragment>
             {
                 data.results.map((result: Result, index: number) => {
-                    if (isMovie(result)) return <MultiSearchMovieCard result={result} />
-                    else if (isTVShow(result)) return <MultiSearchTVShowCard result={result} />
-                    else if (isPerson(result)) return <MultiSearchPersonCard result={result} />
+                    if (isMovie(result)) return <MultiSearchMovieCard key={`MovieCard:${index}`} result={result} />
+                    else if (isTVShow(result)) return <MultiSearchTVShowCard key={`TVShowCard:${index}`} result={result} />
+                    else if (isPerson(result)) return <MultiSearchPersonCard key={`PersonCard:${index}`} result={result} />
                     else return <p key={`Impossible${index}`}>{`You shouldn&apos;t see this check index: ${index}`}</p>
                 })
             }
         </Fragment>
     );
 }
+
+const MultiSearchSkeletons = () => {
+    return (
+        <Fragment>
+            <MultiSearchSkeleton />
+            <MultiSearchSkeleton />
+            <MultiSearchSkeleton />
+            <MultiSearchSkeleton />
+            <MultiSearchSkeleton />
+            <MultiSearchSkeleton />
+        </Fragment>
+    );
+}
+
+const MultiSearchSkeleton = () => {
+    return (
+        <div className="animate-pulse flex flex-row w-[484px] h-[211px] p-3">
+            <div className="w-[125px] h-full bg-gray-100 rounded-sm"></div>
+            <div className="flex flex-col justify-between ml-2 mt-2 grow">
+                <div className="flex flex-col gap-2">
+                    <div className="bg-gray-100 w-2/12 h-2 rounded-md"></div>
+                    <div className="bg-gray-100 w-4/12 h-2 rounded-md"></div>
+                    <div className="bg-gray-100 w-6/12 h-2 rounded-md"></div>
+                    <div className="bg-gray-100 w-8/12 h-2 rounded-md"></div>
+                    <div className="bg-gray-100 w-10/12 h-2 rounded-md"></div>
+                </div>
+                <div className="flex flex-col gap-2">
+                    <div className="bg-gray-100 w-12/12 h-2 rounded-md"></div>
+                    <div className="bg-gray-100 w-12/12 h-2 rounded-md"></div>
+                </div>
+            </div>
+        </div>
+    );
+}
+
 
 const MultiSearchTVShowCard = ({ result }: { result: TVShow & ResultElements }) => {
     return (
@@ -157,7 +193,6 @@ const Metrics = ({ vote_average }: { vote_average: number }) => {
     )
 }
 
-//TODO: add Pagination
 const SearchBox = ({ prevQuery, pageLimit, page, setPage }: { prevQuery: string, pageLimit: number, page: number, setPage: Dispatch<SetStateAction<number>> }) => {
 
     const [query, setQuery] = useState(prevQuery);
@@ -213,10 +248,7 @@ const SearchBox = ({ prevQuery, pageLimit, page, setPage }: { prevQuery: string,
                         <div>
                             <p className="inline">{`Page`}</p>
                             <button className={["text-xl font-medium rounded-sm ml-2 mr-1 pb-1 pl-1 pr-1 bg-red-600 text-neutral-100 disabled:bg-neutral-700"].join(" ")} disabled={page == 1 ? true : false} id="left" onClick={handlePageButtons}>{"<"}</button>
-                            <input type={"number"} defaultValue={page} onChange={(e) => {
-                                setLocalPage(parseInt(e.target.value))
-                                console.log(e.target.value);
-                            }} min={1} max={pageLimit ? pageLimit : 1000} title="page" ref={pageRef} className="text-center text-xl font-semibold ml-2 mr-2 text-red-600 inline w-10 bg-transparent"></input>
+                            <input type={"number"} defaultValue={page} onChange={(e) => setLocalPage(parseInt(e.target.value))} min={1} max={pageLimit ? pageLimit : 1000} title="page" ref={pageRef} className="text-center text-xl font-semibold ml-2 mr-2 text-red-600 inline w-10 bg-transparent" />
                             <button className="text-xl font-medium rounded-sm ml-1 mr-1 pb-1 pl-1 pr-1 bg-red-600 text-neutral-100 disabled:bg-neutral-700" id="right" disabled={page == pageLimit ? true : false} onClick={handlePageButtons}>{">"}</button>
                         </div>
 
