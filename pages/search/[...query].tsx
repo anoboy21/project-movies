@@ -20,7 +20,7 @@ function isReleased(release_date: Date) { return moment() < moment(release_date)
 export const Search = ({ query }: { query: string }) => {
 
     const [page, setPage] = useState(1);
-    const { data, error }: SWRResponse<MultiSearchResponse, Error> = useSWR(`/api/multisearch/${query}/${page}`, fetcher);
+    const { data, error }: SWRResponse<MultiSearchResponse, Error> = useSWR(`/api/multisearch/${query}/${page}`, fetcher, {loadingTimeout: 2000});
 
     return (
         <div className="flex flex-col">
