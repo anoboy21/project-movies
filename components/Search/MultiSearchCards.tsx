@@ -68,7 +68,17 @@ export const MultiSearchMovieCard = ({ result }: { result: Movie & ResultElement
     );
 };
 export const MultiSearchPersonCard = ({ result }: { result: Person & ResultElements; }) => {
-    //TODO: Add case for Directors not just Actors and Actresses
+
+    function HandleKnownForDepartment({department, gender}: {department: string, gender: number}) {
+        
+        if(department === "Acting") return <p>{gender == 1 ? "Actress" : "Actor"}</p>;
+        if(department === "Production") return <p>Producer</p>;
+        if(department === "Visual Effects") return <p>Visual Effects Designer</p>;
+        if(department === "Sound") return <p>Sound Designer</p>;
+        if(department === "Writing") return <p>Writer</p>;
+        else return <p>Unknown Department</p>;
+    }
+
     return (
         <Link key={result.id} href={`/person/${result.id}`} passHref>
             <a className="flex flex-row rounded-md p-3 hover:bg-neutral-900 gap-1">
@@ -83,7 +93,7 @@ export const MultiSearchPersonCard = ({ result }: { result: Person & ResultEleme
                 <div className="grow flex flex-col justify-between font-medium text-base ml-2 mt-2">
                     <div>
                         <p>{result.name}</p>
-                        <p>{result.gender == 1 ? "Actress" : "Actor"}</p>
+                        <HandleKnownForDepartment department={result.known_for_department} gender={result.gender} />
                     </div>
                 </div>
             </a>
