@@ -1,13 +1,13 @@
 import useSWR, { SWRResponse } from "swr";
 import Image from "next/future/image";
-import { PosterLoader } from "../../PosterLoader";
-import fetcher from "../../Fetcher";
-import { CreditsResponse } from "../../types/GetCreditsTypes";
-import { Cast } from "../../types/Cast";
+import { PosterLoader } from "../PosterLoader";
+import fetcher from "../Fetcher";
+import { CreditsResponse } from "../types/GetCreditsTypes";
+import { Cast } from "../types/Cast";
 import Placeholder from "../../assets/MovieSVG.svg";
 import Link from "next/link";
 import { Fragment, useEffect, useState } from "react";
-import { ActorSkeletons, Error } from "../../pages/tv/[id]";
+import { ActorSkeletons, Error } from "../pages/tv/[id]";
 
 export const CastWidget = ({ id }: { id: number; }) => {
     return (
@@ -54,7 +54,7 @@ const CastContent = ({ data }: { data: CreditsResponse; }) => {
                             <Link key={cast.id} href={`/person/${cast.id}`} passHref>
                                 <a>
                                     <Image
-                                        src={cast.profile_path ? cast.profile_path : Placeholder.src}
+                                        src={cast.profile_path!}
                                         alt={`Image of ${cast.name}`}
                                         loader={PosterLoader}
                                         width={125}
