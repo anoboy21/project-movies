@@ -9,9 +9,9 @@ import Link from "next/link";
 import { Fragment, useEffect, useState } from "react";
 import { ActorSkeletons, Error } from "../pages/tv/[id]";
 
-export const CastWidget = ({ id }: { id: number; }) => {
+export const CastWidget = ({ id, className }: { id: number, className?: string }) => {
     return (
-        <div>
+        <div className={`${className}`}>
             <p className="font-semibold text-2xl text-neutral-100 mb-3">Actors</p>
             <CastWrapper id={id} />
         </div>
@@ -42,7 +42,7 @@ const CastContent = ({ data }: { data: CreditsResponse; }) => {
         if (data.cast.length > 10)
             setShowMore(true);
 
-    }, []);
+    }, [data.cast.length]);
 
 
     return (
@@ -60,7 +60,7 @@ const CastContent = ({ data }: { data: CreditsResponse; }) => {
                                         width={125}
                                         height={187}
                                         className="rounded-md w-[125px] h-[187px]" />
-                                    <div className="w-[125px] truncate overflow-x-hidden text-neutral-100">
+                                    <div className="w-[125px] mt-1 truncate overflow-x-hidden text-neutral-100">
                                         <p className="truncate">{cast.name}</p>
                                         <p className="truncate text-neutral-400">{cast.character}</p>
                                     </div>
