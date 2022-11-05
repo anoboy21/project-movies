@@ -6,7 +6,6 @@ import { UpcomingWidget } from '../components/Index/UpcomingWidget';
 import { FormEventHandler, Fragment, useState } from 'react';
 import { useRouter } from 'next/router';
 
-//TODO: Create a Skeleton Component for similar Widgets (Popular, Upcoming, people...) 
 const Home: NextPage = () => {
 
   return (
@@ -65,33 +64,5 @@ function SearchBar() {
     </form>
   );
 }
-
-// const AutoComplete = () => {
-//   const { data, error } = useSWR("/api/multisearch/breaking/1", fetcher);
-
-//   console.log(data);
-
-//   if (!data && !error) return <p>loading....</p>;
-//   if (!data) return <p>Error Occured</p>;
-//   return (
-//     <div className='bg-white text-gray-600 w-auto h-40 overflow-y-scroll z-10'>
-//       {data.results.map((queryItem: Result, index: number) => {
-//         if (index <= 10) return (
-//           <div key={index} className="w-auto h-10 border-b-4 flex justify-between">
-//             <p className=''>{queryItem.title || queryItem.name}</p>
-//             <Image
-//               src={queryItem.backdrop_path ? queryItem.backdrop_path : Placeholder.src}
-//               loader={PosterLoader}
-//               alt={`poster of ${queryItem.title}`}
-//               height={64}
-//               width={64}
-//               className=""
-//             />
-//           </div>
-//         ); else return;
-//       })}
-//     </div>
-//   );
-// }
 
 export default Home;
