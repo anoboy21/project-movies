@@ -1,17 +1,15 @@
 import { GetServerSidePropsContext } from "next";
-import useSWR, { SWRResponse } from "swr";
 import { Movie } from "../../types/Movie";
 import Image from "next/future/image";
 import { PosterLoader } from "../../PosterLoader";
 import { Navbar } from "../../components/Navbar";
 import moment from "moment";
-import fetcher from "../../Fetcher";
-import { CreditsResponse } from "../../types/GetCreditsTypes";
-import { Cast as CastWrapper } from "../../types/Cast";
+import { Cast } from "../../types/Cast";
 import Placeholder from "../../assets/MovieSVG.svg";
 import Link from "next/link";
 import { Fragment, useEffect, useState } from "react";
-import { TVShow } from "../../types/TVShow";
+import { CreatedBy, TVShow } from "../../types/TVShow";
+import { CastWidget } from "../../components/TV/CastWidget";
 
 //TODO: Add case for when The movie is not released yet
 //TODO: Add placeholder image for movie poster
@@ -63,6 +61,16 @@ export default function MoviePage({ data }: { data: TVShow }) {
                         <p className="inline text-red-600">{data.revenue ? `${(data.revenue / 1000000).toFixed(2)}M$` : "Unknown "}</p>
                         <p className="inline"> revenue</p>
                     </div> */}
+                    <p className="font-medium text-lg">Last aired on {moment(data.last_air_date).format("LL")}</p>
+                    <div>
+                        <p className="font-medium text-lg inline text-red-600">{data.number_of_seasons}</p>
+                        <p className="font-medium text-lg inline"> Seasons</p>
+                    </div>
+                    <div>
+                        <p className="font-medium text-lg inline text-red-600">{data.number_of_episodes}</p>
+                        <p className="font-medium text-lg inline"> Episodes</p>
+                    </div>
+                    {/* <p className="font-medium text-lg">Last aired on {moment(data.last_air_date).format("LL")}</p> */}
                 </div>
                 <br />
                 <div className="">
@@ -72,6 +80,7 @@ export default function MoviePage({ data }: { data: TVShow }) {
                 <br />
 
                 <CastWidget id={data.id} />
+                <CreatorWidget creators={data.created_by} />
             </div>
 
         </div>
@@ -99,64 +108,45 @@ const Metrics = ({ data, styles }: { data: TVShow, styles: string }) => {
     )
 }
 
-const CastWidget = ({ id }: { id: number }) => {
+const CreatorWidget = ({ creators }: { creators: CreatedBy[] }) => {
     return (
         <div>
-            <p className="font-semibold text-2xl text-neutral-100 mb-3">Actors</p>
-            <CastWrapper id={id} />
+            <p className="font-semibold text-2xl text-neutral-100 mb-3">Creators</p>
+            <CreatorWrapper creators={creators} />
         </div>
     )
 }
 
-//TODO: Build "Show More" Button search
-// pass cast data and movie id as props
-const CastWrapper = ({ id }: { id: number }) => {
-
-    const { data, error }: SWRResponse<CreditsResponse, Error> = useSWR(`/api/gettvcredits/${id}`, fetcher);
-    // console.log(data);
-
-
-    //TODO: Replace placeholder.com with something better
-    if (!data && !error) return <ActorSkeletons />;
-    if (!data) return <Error />;
-    return (
-        <div className="flex flex-row overflow-x-auto md:scrollbar-thin md:scrollbar-track-gray-100 md:scrollbar-thumb-red-600 pb-5 md:ml-2 md:mr-2">
-            <CastContent data={data} />
-        </div>
-    )
-}
-
-const CastContent = ({ data }: { data: CreditsResponse }) => {
+export const CreatorContent = ({ creators }: { creators: CreatedBy[] }) => {
     const [showMore, setShowMore] = useState(false);
 
     useEffect(() => {
-        if (data.cast.length > 10) setShowMore(true);
+        if (creators.length > 10) setShowMore(true);
 
     }, [])
 
-
     return (
         <Fragment>
-            {data.cast.map((cast: CastWrapper, index: number) => {
+            {creators.map((creator: CreatedBy, index: number) => {
                 if (index <= 10) return (
-                    <Link key={cast.id} href={`/person/${cast.id}`} passHref>
-                        <a>
-                            <div className="grid auto-cols-max ml-1 mr-1 p-2 hover:bg-neutral-900 rounded-sm transition-all delay-50">
+                    <div className="grid auto-cols-max w-min ml-1 mr-1 p-2 hover:bg-neutral-900 rounded-sm transition-all delay-50">
+                        <Link key={creator.id} href={`/person/${creator.id}`} passHref>
+                            <a>
                                 <Image
-                                    src={cast.profile_path ? cast.profile_path : Placeholder.src}
-                                    alt={`Image of ${cast.name}`}
+                                    src={creator.profile_path ? creator.profile_path : Placeholder.src}
+                                    alt={`Image of ${creator.name}`}
                                     loader={PosterLoader}
                                     width={125}
                                     height={187}
                                     className="rounded-md w-[125px] h-[187px]"
                                 />
-                                <div className="w-[125px] truncate overflow-x-hidden text-neutral-100">
-                                    <p className="truncate">{cast.name}</p>
-                                    <p className="truncate text-neutral-400">{cast.character}</p>
+                                <div className="w-[125px] truncate mt-1 overflow-x-hidden text-neutral-100">
+                                    <p className="truncate">{creator.name}</p>
+                                    {/* <p className="truncate text-neutral-400">{creator}</p> */}
                                 </div>
-                            </div>
-                        </a>
-                    </Link>
+                            </a>
+                        </Link>
+                    </div>
                 );
             })}
             {
@@ -169,10 +159,19 @@ const CastContent = ({ data }: { data: CreditsResponse }) => {
                     : <Fragment />
             }
         </Fragment>
-    )
+    );
 }
 
-const Error = () => {
+const CreatorWrapper = ({ creators }: { creators: CreatedBy[] }) => {
+    return (
+        <div className="flex flex-row overflow-x-auto md:scrollbar-thin md:scrollbar-track-gray-100 md:scrollbar-thumb-red-600 pb-5 md:ml-2 md:mr-2">
+            <CreatorContent creators={creators} />
+        </div>
+    );
+}
+
+
+export const Error = () => {
     return (
         <div className="flex flex-col justify-center items-center w-auto h-[252px]">
             <p className="font-semibold text-3xl text-neutral-100">Something went wrong...</p>
@@ -181,7 +180,7 @@ const Error = () => {
     )
 }
 
-const ActorSkeletons = () => {
+export const ActorSkeletons = () => {
     return (
         <div className="flex flex-row overflow-x-auto gap-2">
             <ActorSkeleton />
@@ -209,7 +208,7 @@ const ActorSkeleton = () => (
 export async function getServerSideProps(context: GetServerSidePropsContext) {
     let data: TVShow;
 
-    const {id} = context.query;
+    const { id } = context.query;
     const request = await fetch(`https://api.themoviedb.org/3/tv/${id}?api_key=${process.env.TMDB_API_KEY}&language=en-US`);
     data = await request.json();
 
