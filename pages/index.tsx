@@ -1,9 +1,9 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { Navbar } from '../components/Navbar';
-import { PopularWidget } from '../components/Widgets/PopularWidget';
+import { PopularWidget } from '../components/Index/PopularWidget';
 import { Movie } from '../types/Movie';
-import { UpcomingWidget } from '../components/Widgets/UpcomingWidget';
+import { UpcomingWidget } from '../components/Index/UpcomingWidget';
 import { FormEventHandler, Fragment, useState } from 'react';
 import useSWR from 'swr';
 import { Result } from '../types/MultiSearchTypes';
