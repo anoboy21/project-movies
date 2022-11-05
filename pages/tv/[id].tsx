@@ -9,7 +9,7 @@ import Placeholder from "../../assets/MovieSVG.svg";
 import Link from "next/link";
 import { Fragment, useEffect, useState } from "react";
 import { CreatedBy, TVShow } from "../../types/TVShow";
-import { CastWidget } from "../../components/TV/CastWidget";
+import { CastWidget } from "../../components/CastWidget";
 
 //TODO: Add case for when The movie is not released yet
 //TODO: Add placeholder image for movie poster
@@ -49,18 +49,6 @@ export default function MoviePage({ data }: { data: TVShow }) {
                 <Metrics data={data} styles="mb-5" />
                 <div>
                     <p className="font-medium text-lg">First aired {moment(data.first_air_date).format("LL")}</p>
-                    {/* <div className="text-lg font-medium">
-                        <p className="inline text-red-600">{data.runtime} Minutes</p>
-                        <p className="inline"> of runtime</p>
-                    </div>
-                    <div className="text-lg font-medium">
-                        <p className="inline text-red-600">{data.budget ? `${data.budget / 1000000}M$` : "Unknown "}</p>
-                        <p className="inline"> budget</p>
-                    </div>
-                    <div className="text-lg font-medium">
-                        <p className="inline text-red-600">{data.revenue ? `${(data.revenue / 1000000).toFixed(2)}M$` : "Unknown "}</p>
-                        <p className="inline"> revenue</p>
-                    </div> */}
                     <p className="font-medium text-lg">Last aired on {moment(data.last_air_date).format("LL")}</p>
                     <div>
                         <p className="font-medium text-lg inline text-red-600">{data.number_of_seasons}</p>
@@ -70,7 +58,6 @@ export default function MoviePage({ data }: { data: TVShow }) {
                         <p className="font-medium text-lg inline text-red-600">{data.number_of_episodes}</p>
                         <p className="font-medium text-lg inline"> Episodes</p>
                     </div>
-                    {/* <p className="font-medium text-lg">Last aired on {moment(data.last_air_date).format("LL")}</p> */}
                 </div>
                 <br />
                 <div className="">
@@ -80,7 +67,7 @@ export default function MoviePage({ data }: { data: TVShow }) {
                 <br />
 
                 <CastWidget id={data.id} />
-                <CreatorWidget creators={data.created_by} />
+                {data.created_by.length > 1 ? <CreatorWidget creators={data.created_by} /> : <Fragment/>}
             </div>
 
         </div>
