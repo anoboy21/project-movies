@@ -1,3 +1,5 @@
+import { Department } from "./Department";
+
 export interface Cast {
     adult:                boolean;
     gender:               number;
@@ -13,17 +15,4 @@ export interface Cast {
     order?:               number;
     department?:          Department;
     job?:                 string;
-}
-
-export enum Department {
-    Acting = "Acting",
-    Art = "Art",
-    Camera = "Camera",
-    CostumeMakeUp = "Costume & Make-Up",
-    Crew = "Crew",
-    Directing = "Directing",
-    Editing = "Editing",
-    Production = "Production",
-    Sound = "Sound",
-    Writing = "Writing",
 }
