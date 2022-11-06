@@ -1,7 +1,7 @@
 import Image from 'next/future/image';
 import useSWR, { SWRResponse } from 'swr';
 import { PosterLoader } from '../../PosterLoader';
-import { PopularResponse, PopularResult } from '../../types/GetPopularTypes';
+import { PopularResponse, PopularResult } from '../../types/GetPopularMoviesTypes';
 import Link from 'next/link';
 import fetcher from '../../Fetcher';
 import { IndexWidgetBase, IndexWidgetScrollBar, IndexWidgetError, IndexWidgetSkeletons, Metrics } from './IndexWidgetBase';
