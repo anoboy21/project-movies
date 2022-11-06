@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 
-export const IndexWidgetBase = ({ className, title }: { className?: string, title: string, children: React.ReactElement }, children: React.ReactElement): React.ReactElement => {
+export const IndexWidgetBase = ({ className, title, children }: { className?: string, title: string, children: React.ReactNode }): React.ReactElement => {
     return (
         <div className={`${className}`}>
             <h1 className='m-3 font-semibold text-3xl text-gray-100'>{title}</h1>
