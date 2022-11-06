@@ -23,9 +23,8 @@ const Home: NextPage = () => {
           <SearchBar />
         </div>
 
-        <PopularWidget topLevelStyles={"mb-10"} />
-
-        <UpcomingWidget topLevelStyles={"mt-10"} />
+        <PopularWidget />
+        <UpcomingWidget />
       </main>
     </div>
   )
