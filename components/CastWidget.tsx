@@ -21,7 +21,6 @@ export const CastWidget = ({ id, mediaType, className }: { id: number, mediaType
 // pass cast data and movie id as props
 export const CastWrapper = ({ id, mediaType }: { id: number, mediaType: string }) => {
 
-    console.log(mediaType);
     const { data, error }: SWRResponse<CreditsResponse, Error> = useSWR(`/api/get${mediaType}credits/${id}`, fetcher);
     // console.log(data);
 
