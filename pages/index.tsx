@@ -5,7 +5,7 @@ import { PopularMovies } from '../components/Index/PopularMovies';
 import { UpcomingMovies } from '../components/Index/UpcomingMovies';
 import { FormEventHandler, Fragment, useState } from 'react';
 import { useRouter } from 'next/router';
-import { PopularShows } from '../components/Index/PopularShows';
+import { PopularTV } from '../components/Index/PopularTV';
 
 const Home: NextPage = () => {
 
@@ -26,7 +26,7 @@ const Home: NextPage = () => {
 
         <PopularMovies />
         <UpcomingMovies />
-        <PopularShows />
+        <PopularTV />
       </main>
     </div>
   )
