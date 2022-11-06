@@ -15,15 +15,15 @@ export interface ResultElements {
 
 export type Result = Movie & ResultElements | Person & ResultElements | TVShow & ResultElements;
 
-export function isMovie(result: Result): result is Movie & ResultElements {
+export function isMovieResult(result: Result): result is Movie & ResultElements {
     return (result as Movie & ResultElements).media_type === "movie";
 }
 
-export function isTVShow(result: Result): result is TVShow & ResultElements {
+export function isTVShowResult(result: Result): result is TVShow & ResultElements {
     return (result as TVShow & ResultElements).media_type === "tv";
 }
 
-export function isPerson(result: Result): result is TVShow & ResultElements {
+export function isPersonResult(result: Result): result is TVShow & ResultElements {
     return (result as Person & ResultElements).media_type === "person";
 }
 
