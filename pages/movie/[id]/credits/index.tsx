@@ -17,9 +17,21 @@ const MovieCredits = ({ data }: { data: CreditsResponse }) => {
         <Fragment>
             <Navbar />
             <Tab.Group>
-                <Tab.List className={"flex flex-row justify-around font-semibold text-3xl gap-2 mt-4 pb-2 border-b-4 border-red-500"}>
-                    <Tab className={"bg-red-500 rounded-sm pt-2 pb-2 grow ml-2 text-neutral-100"}>Cast</Tab>
-                    <Tab className={"bg-red-500 rounded-sm pt-2 pb-2 grow mr-2 text-neutral-100"}>Crew</Tab>
+                <Tab.List className={"flex flex-row justify-around font-bold text-xl md:text-2xl gap-2 mt-4 pb-2 border-b-2 border-red-500"}>
+                    <Tab as={Fragment}>
+                        {({ selected }) => (
+                            <button className={["rounded-sm pt-2 pb-2 grow ml-2 text-neutral-200", selected ? "bg-red-600 hover:bg-red-600" : "bg-inherit hover:bg-neutral-700"].join(" ")}>
+                                Cast
+                            </button>
+                        )}
+                    </Tab>
+                    <Tab as={Fragment}>
+                        {({ selected }) => (
+                            <button className={["rounded-sm pt-2 pb-2 grow mr-2 text-neutral-200", selected ? "bg-red-600 hover:bg-red-600" : "bg-inherit hover:bg-neutral-700"].join(" ")}>
+                                Crew
+                            </button>
+                        )}
+                    </Tab>
                 </Tab.List>
                 <Tab.Panels className={"ml-2 mr-2"}>
                     <Tab.Panel>
