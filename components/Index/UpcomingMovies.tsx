@@ -8,7 +8,7 @@ import React, { Fragment } from 'react';
 import moment from 'moment';
 import { IndexWidgetBase, IndexWidgetError, IndexWidgetScrollBar, IndexWidgetSkeletons } from './IndexWidgetBase';
 
-export const UpcomingMovies = ({className}: {className?: string}): React.ReactElement => {
+export const UpcomingMovies = ({ className }: { className?: string }): React.ReactElement => {
   return (
     <IndexWidgetBase className={`${className}`} title='Upcoming Movies' key={"upcoming-movies"}>
       <IndexWidgetScrollBar>
