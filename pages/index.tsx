@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { Navbar } from '../components/Navbar';
 import { PopularMovies } from '../components/Index/PopularMovies';
 import { UpcomingMovies } from '../components/Index/UpcomingMovies';
-import { FormEventHandler, Fragment, useState } from 'react';
+import { FormEventHandler, useState } from 'react';
 import { useRouter } from 'next/router';
 import { PopularTV } from '../components/Index/PopularTV';
 
@@ -25,8 +25,8 @@ const Home: NextPage = () => {
         </div>
 
         <PopularMovies />
-        <UpcomingMovies />
-        <PopularTV />
+        <UpcomingMovies className={"mt-10"} />
+        <PopularTV  className='mt-10'/>
       </main>
     </div>
   )
