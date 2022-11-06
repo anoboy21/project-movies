@@ -53,3 +53,11 @@ export const IndexWidgetError = () => {
         </div>
     )
 }
+
+export const IndexWidgetScrollBar = ({ children }: { children: ReactNode }) => {
+    return (
+        <div className='flex flex-row overflow-x-scroll md:scrollbar-thin md:scrollbar-track-gray-100 md:scrollbar-thumb-red-600 pb-5 md:ml-2 md:mr-2'>
+            {children}
+        </div>
+    );
+}
