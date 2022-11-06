@@ -8,9 +8,9 @@ import React, { Fragment } from 'react';
 import moment from 'moment';
 import { IndexWidgetBase, IndexWidgetError, IndexWidgetScrollBar, IndexWidgetSkeletons } from './IndexWidgetBase';
 
-export const UpcomingMovies = (): React.ReactElement => {
+export const UpcomingMovies = ({className}: {className?: string}): React.ReactElement => {
   return (
-    <IndexWidgetBase title='Upcoming Movies' key={"upcoming-movies"}>
+    <IndexWidgetBase className={`${className}`} title='Upcoming Movies' key={"upcoming-movies"}>
       <IndexWidgetScrollBar>
         <UpcomingWidgetContent />
       </IndexWidgetScrollBar>
