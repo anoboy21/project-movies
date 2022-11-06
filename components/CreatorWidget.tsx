@@ -21,6 +21,9 @@ const CreatorWrapper = ({ creators }: { creators: CreatedBy[]; }) => {
     );
 };
 
+
+//TODO: Do something about show more button
+// in this case it should lead to the same area as Cast Widget
 export const CreatorContent = ({ creators }: { creators: CreatedBy[]; }) => {
     const [showMore, setShowMore] = useState(false);
 
@@ -35,8 +38,8 @@ export const CreatorContent = ({ creators }: { creators: CreatedBy[]; }) => {
             {creators.map((creator: CreatedBy, index: number) => {
                 if (index <= 10)
                     return (
-                        <div className="grid auto-cols-max w-min ml-1 mr-1 p-2 hover:bg-neutral-900 rounded-sm transition-all delay-50">
-                            <Link key={creator.id} href={`/person/${creator.id}`} passHref>
+                        <div key={creator.id} className="grid auto-cols-max w-min ml-1 mr-1 p-2 hover:bg-neutral-900 rounded-sm transition-all delay-50">
+                            <Link href={`/person/${creator.id}`} passHref>
                                 <a>
                                     <Image
                                         src={creator.profile_path ? creator.profile_path : Placeholder.src}
