@@ -4,20 +4,23 @@ import { PosterLoader } from '../../PosterLoader';
 import { PopularResponse, PopularResult } from '../../types/GetPopularTypes';
 import Link from 'next/link';
 import fetcher from '../../Fetcher';
+import { IndexWidgetError, IndexWidgetSkeletons, Metrics } from './IndexWidgetBase';
 
-export const PopularWidget = (props: any): React.ReactElement => {
+export const PopularWidget = ({ className, title }: { className: string, title: string }): React.ReactElement => {
   return (
-    <div className={`${props.topLevelStyles}`}>
-      <h1 className='m-3 font-semibold text-3xl text-gray-100'>What&apos;s Popular</h1>
+    <div className={`${className}`}>
+      <h1 className='m-3 font-semibold text-3xl text-gray-100'>{title}</h1>
       <PopularWidgetContent />
     </div>
   );
 };
+
+
 const PopularWidgetContent = (): React.ReactElement => {
   const { data, error }: SWRResponse<PopularResponse, Error> = useSWR('/api/getpopular/1', fetcher);
 
-  if (!data && !error) return <PopularSkeletons />;
-  if (error) return <PopularError />;
+  if (!data && !error) return <IndexWidgetSkeletons />;
+  if (error) return <IndexWidgetError />;
   return (
     <div className='flex flex-row overflow-x-scroll md:scrollbar-thin md:scrollbar-track-gray-100 md:scrollbar-thumb-red-600 pb-5 md:ml-2 md:mr-2'>
       {data!.results.map((item: PopularResult) => {
@@ -47,48 +50,3 @@ const PopularWidgetContent = (): React.ReactElement => {
   );
 };
 
-const Metrics = ({ vote_average }: { vote_average: number }) => {
-
-  const percentage = Math.round(vote_average * 10).toString();
-
-  return (
-    <div className='flex flex-row items-center justify-between mr-2 ml-2 gap-3'>
-      <div className='h-4 w-full bg-neutral-800 rounded-sm flex items-center'>
-        <span className={`inline-block relative bg-red-600 h-2 ml-1 mr-2`} style={{ width: `${percentage}%` }}></span>
-      </div>
-      <p className='font-semibold text-lg text-red-600'>{percentage}%</p>
-    </div>
-
-  )
-}
-
-export const PopularError = () => {
-  return (
-    <div className='w-auto h-[451px] flex flex-col items-center justify-center'>
-      <p className='font-semibold text-2xl text-neutral-100'>Something&apos;s not right.</p>
-      <p className='font-base text-lg text-neutral-400'>Please check your internet connection</p>
-    </div>
-  )
-}
-
-export const PopularSkeletons = () => {
-  return (
-    <div className='flex flex-row overflow-x-scroll md:scrollbar-thin md:scrollbar-track-gray-100 md:scrollbar-thumb-red-600 pb-5 md:ml-2 md:mr-2'>
-      <PopularSkeleton />
-      <PopularSkeleton />
-      <PopularSkeleton />
-      <PopularSkeleton />
-      <PopularSkeleton />
-    </div>
-  );
-};
-
-const PopularSkeleton = () => {
-  return (
-    <div className='ml-2 mr-2 p-2 h-[463px]'>
-      <div className='animate-pulse w-[250px] h-[375px] bg-gray-100 rounded-md'></div>
-      <div className='animate-pulse w-4/6 h-3 mb-3 bg-gray-100 rounded-md mt-4'></div>
-      <div className='animate-pulse w-3/6 h-3 bg-gray-100 rounded-md mt-2 mb-3'></div>
-    </div>
-  );
-};

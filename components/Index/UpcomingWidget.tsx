@@ -6,7 +6,7 @@ import fetcher from '../../Fetcher';
 import { UpcomingResponse, UpcomingResult } from '../../types/GetUpcomingTypes';
 import React from 'react';
 import moment from 'moment';
-import { PopularError, PopularSkeletons } from './PopularWidget';
+import { IndexWidgetError, IndexWidgetSkeletons } from './IndexWidgetBase';
 
 export const UpcomingWidget = (props: any): React.ReactElement => {
   
@@ -20,8 +20,8 @@ export const UpcomingWidget = (props: any): React.ReactElement => {
 const UpcomingWidgetContent = (): React.ReactElement => {
   const { data, error }: SWRResponse<UpcomingResponse, Error> = useSWR("/api/getupcoming/1", fetcher);
 
-  if (!data && !error) return <PopularSkeletons />;
-  if (error) return <PopularError />;
+  if (!data && !error) return <IndexWidgetSkeletons />;
+  if (error) return <IndexWidgetError />;
   return (
     <div className='flex flex-row overflow-x-scroll md:scrollbar-thin md:scrollbar-track-gray-100 md:scrollbar-thumb-red-600 pb-5 md:ml-2 md:mr-2'>
       {data!.results.map((item: UpcomingResult) => {
