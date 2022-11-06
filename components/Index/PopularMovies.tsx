@@ -7,9 +7,9 @@ import fetcher from '../../Fetcher';
 import { IndexWidgetBase, IndexWidgetScrollBar, IndexWidgetError, IndexWidgetSkeletons, Metrics } from './IndexWidgetBase';
 import { Fragment } from 'react';
 
-export const PopularWidget = ({className}: {className?: string}): React.ReactElement => {
+export const PopularMovies = ({className}: {className?: string}): React.ReactElement => {
   return (
-    <IndexWidgetBase className={`${className}`} title={`What's Popular`} key={"popular-movies"}>
+    <IndexWidgetBase className={`${className}`} title={`Popular Movies`} key={"popular-movies"}>
       <IndexWidgetScrollBar>
         <PopularWidgetContent />
       </IndexWidgetScrollBar>
@@ -19,7 +19,7 @@ export const PopularWidget = ({className}: {className?: string}): React.ReactEle
 
 
 const PopularWidgetContent = (): React.ReactElement => {
-  const { data, error }: SWRResponse<PopularResponse, Error> = useSWR('/api/getpopular/1', fetcher);
+  const { data, error }: SWRResponse<PopularResponse, Error> = useSWR('/api/getpopularmovies/1', fetcher);
 
   if (!data && !error) return <IndexWidgetSkeletons />;
   if (error) return <IndexWidgetError />;

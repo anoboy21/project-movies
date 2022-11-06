@@ -1,10 +1,11 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { Navbar } from '../components/Navbar';
-import { PopularWidget } from '../components/Index/PopularWidget';
-import { UpcomingWidget } from '../components/Index/UpcomingWidget';
+import { PopularMovies } from '../components/Index/PopularMovies';
+import { UpcomingMovies } from '../components/Index/UpcomingMovies';
 import { FormEventHandler, Fragment, useState } from 'react';
 import { useRouter } from 'next/router';
+import { PopularShows } from '../components/Index/PopularShows';
 
 const Home: NextPage = () => {
 
@@ -23,8 +24,9 @@ const Home: NextPage = () => {
           <SearchBar />
         </div>
 
-        <PopularWidget />
-        <UpcomingWidget />
+        <PopularMovies />
+        <UpcomingMovies />
+        <PopularShows />
       </main>
     </div>
   )
