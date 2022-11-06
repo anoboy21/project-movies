@@ -33,7 +33,7 @@ const SearchContent = ({ data, error }: { data: MultiSearchResponse | undefined,
     if (!data && !error) return <MultiSearchSkeletons />;
     if (!data) return <p>Error</p>;
     return (
-        <Fragment>
+        <div className="grid auto-cols-auto grid-cols-1 md:grid-cols-2">
             {
                 data.results.map((result: Result, index: number) => {
                     if (isMovieResult(result)) return <MultiSearchMovieCard key={`MovieCard:${index}`} result={result} />
@@ -42,7 +42,7 @@ const SearchContent = ({ data, error }: { data: MultiSearchResponse | undefined,
                     else return <p key={`Impossible${index}`}>{`You shouldn&apos;t see this check index: ${index}`}</p>
                 })
             }
-        </Fragment>
+        </div>
     );
 }
 
