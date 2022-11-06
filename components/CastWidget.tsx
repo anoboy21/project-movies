@@ -4,38 +4,37 @@ import { PosterLoader } from "../PosterLoader";
 import fetcher from "../Fetcher";
 import { CreditsResponse } from "../types/GetCreditsTypes";
 import { Cast } from "../types/Cast";
-import Placeholder from "../../assets/MovieSVG.svg";
+import Placeholder from "../assets/MovieSVG.svg";
 import Link from "next/link";
 import { Fragment, useEffect, useState } from "react";
-import { ActorSkeletons, Error } from "../pages/tv/[id]";
 
-export const CastWidget = ({ id, className }: { id: number, className?: string }) => {
+export const CastWidget = ({ id, mediaType, className }: { id: number, mediaType: string, className?: string }) => {
     return (
         <div className={`${className}`}>
             <p className="font-semibold text-2xl text-neutral-100 mb-3">Actors</p>
-            <CastWrapper id={id} />
+            <CastWrapper id={id} mediaType={mediaType} />
         </div>
     );
 };
 
 //TODO: Build "Show More" Button search
 // pass cast data and movie id as props
-const CastWrapper = ({ id }: { id: number; }) => {
+export const CastWrapper = ({ id, mediaType }: { id: number, mediaType: string }) => {
 
-    const { data, error }: SWRResponse<CreditsResponse, Error> = useSWR(`/api/gettvcredits/${id}`, fetcher);
+    console.log(mediaType);
+    const { data, error }: SWRResponse<CreditsResponse, Error> = useSWR(`/api/get${mediaType}credits/${id}`, fetcher);
     // console.log(data);
-    if (!data && !error)
-        return <ActorSkeletons />;
-    if (!data)
-        return <Error />;
+
+    if (!data && !error) return <ActorSkeletons />;
+    if (!data) return <Error />;
     return (
         <div className="flex flex-row overflow-x-auto md:scrollbar-thin md:scrollbar-track-gray-100 md:scrollbar-thumb-red-600 pb-5 md:ml-2 md:mr-2">
-            <CastContent data={data} />
+            <CastContent data={data} mediaType={mediaType} />
         </div>
     );
 };
 
-const CastContent = ({ data }: { data: CreditsResponse; }) => {
+const CastContent = ({ data, mediaType }: { data: CreditsResponse, mediaType: string }) => {
     const [showMore, setShowMore] = useState(false);
 
     useEffect(() => {
@@ -50,11 +49,11 @@ const CastContent = ({ data }: { data: CreditsResponse; }) => {
             {data.cast.map((cast: Cast, index: number) => {
                 if (index <= 10)
                     return (
-                        <div className="grid auto-cols-max ml-1 mr-1 p-2 hover:bg-neutral-900 rounded-sm transition-all delay-50">
-                            <Link key={cast.id} href={`/person/${cast.id}`} passHref>
+                        <div key={cast.id} className="grid auto-cols-max ml-1 mr-1 p-2 hover:bg-neutral-900 rounded-sm transition-all delay-50">
+                            <Link href={`/person/${cast.id}`} passHref>
                                 <a>
                                     <Image
-                                        src={cast.profile_path!}
+                                        src={cast.profile_path ? cast.profile_path : Placeholder.src}
                                         alt={`Image of ${cast.name}`}
                                         loader={PosterLoader}
                                         width={125}
@@ -70,7 +69,7 @@ const CastContent = ({ data }: { data: CreditsResponse; }) => {
                     );
             })}
             {showMore ?
-                <Link href="#" passHref>
+                <Link href={`/${mediaType}/${data.id}/credits`} passHref>
                     <a className="flex items-center justify-center text-neutral-100 rounded-sm font-medium text-lg hover:bg-neutral-900 pl-12 pr-12">
                         Show more
                     </a>
@@ -79,3 +78,38 @@ const CastContent = ({ data }: { data: CreditsResponse; }) => {
         </Fragment>
     );
 };
+
+const ActorSkeletons = () => {
+    return (
+        <div className="flex flex-row overflow-x-auto gap-2">
+            <ActorSkeleton />
+            <ActorSkeleton />
+            <ActorSkeleton />
+            <ActorSkeleton />
+            <ActorSkeleton />
+            <ActorSkeleton />
+            <ActorSkeleton />
+            <ActorSkeleton />
+            <ActorSkeleton />
+            <ActorSkeleton />
+        </div>
+    )
+}
+
+
+const ActorSkeleton = () => (
+    <div className="mb-2">
+        <div className="w-[125px] h-[187px] animate-pulse bg-gray-100 rounded-md mb-2"></div>
+        <div className="w-24 h-1 animate-pulse bg-gray-100 rounded-sm mb-1"></div>
+        <div className="w-20 h-1 animate-pulse bg-gray-200 rounded-sm"></div>
+    </div>
+)
+
+const Error = () => {
+    return (
+        <div className="flex flex-col justify-center items-center w-auto h-[252px]">
+            <p className="font-semibold text-3xl text-neutral-100">Something went wrong...</p>
+            <p className="font-semibold text-lg text-neutral-400">Please check your internet connection.</p>
+        </div>
+    )
+}
