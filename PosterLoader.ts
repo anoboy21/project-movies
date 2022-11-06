@@ -8,7 +8,7 @@ import Placeholder from "./assets/MovieSVG.svg";
  * @returns 
  */
 export const PosterLoader = ({src, width}: {src: string, width: number}) => {
-    if(!src) return Placeholder.src;
+    if(!src || src == null || src == undefined) return Placeholder.src;
     if(src == Placeholder.src) return Placeholder.src;
     return `https://image.tmdb.org/t/p/w500/${src}`;
 }
