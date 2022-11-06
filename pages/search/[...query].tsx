@@ -59,6 +59,7 @@ const MultiSearchSkeletons = () => {
     );
 }
 
+//TODO: Fix weird sizing issue
 const MultiSearchSkeleton = () => {
     return (
         <div className="animate-pulse flex flex-row w-[484px] h-[211px] p-3">
