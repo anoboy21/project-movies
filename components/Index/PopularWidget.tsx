@@ -4,14 +4,16 @@ import { PosterLoader } from '../../PosterLoader';
 import { PopularResponse, PopularResult } from '../../types/GetPopularTypes';
 import Link from 'next/link';
 import fetcher from '../../Fetcher';
-import { IndexWidgetError, IndexWidgetSkeletons, Metrics } from './IndexWidgetBase';
+import { IndexWidgetBase, IndexWidgetScrollBar, IndexWidgetError, IndexWidgetSkeletons, Metrics } from './IndexWidgetBase';
+import { Fragment } from 'react';
 
-export const PopularWidget = ({ className, title }: { className: string, title: string }): React.ReactElement => {
+export const PopularWidget = ({className}: {className?: string}): React.ReactElement => {
   return (
-    <div className={`${className}`}>
-      <h1 className='m-3 font-semibold text-3xl text-gray-100'>{title}</h1>
-      <PopularWidgetContent />
-    </div>
+    <IndexWidgetBase className={`${className}`} title={`Whats Popular`} key={"Popular Widget"}>
+      <IndexWidgetScrollBar>
+        <PopularWidgetContent />
+      </IndexWidgetScrollBar>
+    </IndexWidgetBase>
   );
 };
 
@@ -22,7 +24,7 @@ const PopularWidgetContent = (): React.ReactElement => {
   if (!data && !error) return <IndexWidgetSkeletons />;
   if (error) return <IndexWidgetError />;
   return (
-    <div className='flex flex-row overflow-x-scroll md:scrollbar-thin md:scrollbar-track-gray-100 md:scrollbar-thumb-red-600 pb-5 md:ml-2 md:mr-2'>
+    <Fragment>
       {data!.results.map((item: PopularResult) => {
         return (
           <div key={item.id} className="grid auto-cols-max mr-2 ml-2 p-2 rounded-sm text-xsm transition-all delay-10 hover:bg-neutral-900">
@@ -45,8 +47,7 @@ const PopularWidgetContent = (): React.ReactElement => {
           </div>
         );
       })}
-    </div>
-
+    </Fragment>
   );
 };
 
