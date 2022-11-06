@@ -12,7 +12,6 @@ export const PersonPage = ({ data }: { data: Person }) => {
     //TODO: ADD ERROR BOUNDARIES
 
     //TODO: Handle case Peron Page does not exist
-    //TODO: Hide long Biographies behind an arrow
     console.log(data);
     return (
         <Fragment>
