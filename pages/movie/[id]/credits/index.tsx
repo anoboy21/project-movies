@@ -23,14 +23,18 @@ const MovieCredits = ({ data }: { data: CreditsResponse }) => {
                 </Tab.List>
                 <Tab.Panels className={"ml-2 mr-2"}>
                     <Tab.Panel>
-                        {data.cast.map((cast, index) => (
-                            <MultiSearchPersonCard key={cast.cast_id} result={cast} />
-                        ))}
+                        {data.cast.map((cast, index) => {
+                            if (index <= 10) return (
+                                <MultiSearchPersonCard key={cast.cast_id} result={cast} />
+                            );
+                        })}
                     </Tab.Panel>
                     <Tab.Panel>
-                        {data.crew.map((crew, index) => (
-                            <MultiSearchPersonCard key={crew.credit_id} result={crew} />
-                        ))}
+                        {data.crew.map((crew, index) => {
+                            if (index <= 10) return (
+                                <MultiSearchPersonCard key={crew.credit_id} result={crew} />
+                            )
+                        })}
                     </Tab.Panel>
                 </Tab.Panels>
             </Tab.Group>
