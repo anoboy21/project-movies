@@ -9,7 +9,7 @@ import { Fragment } from 'react';
 
 export const PopularWidget = ({className}: {className?: string}): React.ReactElement => {
   return (
-    <IndexWidgetBase className={`${className}`} title={`What's Popular`} key={"Popular Widget"}>
+    <IndexWidgetBase className={`${className}`} title={`What's Popular`} key={"popular-movies"}>
       <IndexWidgetScrollBar>
         <PopularWidgetContent />
       </IndexWidgetScrollBar>
