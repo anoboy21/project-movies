@@ -123,12 +123,11 @@ const SearchBox = ({ prevQuery, pageLimit, page, setPage }: { prevQuery: string,
     //TODO: REFACTOR
     return (
         <Fragment>
-            <div className="flex flex-col p-3 border-4 border-red-600 rounded-sm border-t-0 border-l-0 border-r-0 w-full md:border-2 md:w-4/6 md:m-3">
+            <div className="flex flex-col p-3 border-4 border-red-600 rounded-sm border-t-0 border-l-0 border-r-0 w-full">
                 <div className="text-lg">
-                    {/* <label title="query" className="font-medium inline">{`Searched Query: `}</label> */}
-                    <form className="flex flex-col justify-between">
-                        <input title="query" type={"text"} defaultValue={query} onChange={(e) => setQuery(e.target.value)} className="font-semibold text-red-600 p-1 rounded-sm bg-transparent border-b-2" />
-                        <button onClick={(e) => handleOnSearchBtnClick(e)} className="mt-3 font-medium rounded-sm bg-red-500 pl-3 pr-3 pt-1 pb-1">Search</button>
+                    <form className="flex flex-col justify-between md:flex-row">
+                        <input className="font-semibold text-red-600 p-1 rounded-sm bg-transparent border-b-2 md:grow md:mr-5" title="query" type={"text"} defaultValue={query} onChange={(e) => setQuery(e.target.value)} />
+                        <button className="mt-3 font-medium rounded-sm bg-red-500 pl-3 pr-3 pt-1 pb-1" onClick={(e) => handleOnSearchBtnClick(e)}>Search</button>
                     </form>
                 </div>
 
