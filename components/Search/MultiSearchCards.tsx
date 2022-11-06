@@ -8,6 +8,7 @@ import { TVShow } from "../../types/TVShow";
 import { Movie } from "../../types/Movie";
 import { Person } from "../../types/Person";
 import { isReleased } from "../../pages/search/[...query]";
+import { Cast } from "../../types/Cast";
 
 export const MultiSearchTVShowCard = ({ result }: { result: TVShow & ResultElements; }) => {
     return (
@@ -67,7 +68,7 @@ export const MultiSearchMovieCard = ({ result }: { result: Movie & ResultElement
         </Link>
     );
 };
-export const MultiSearchPersonCard = ({ result }: { result: Person & ResultElements; }) => {
+export const MultiSearchPersonCard = ({ result }: { result: Person | Cast }) => {
 
     function HandleKnownForDepartment({department, gender}: {department: string, gender: number}) {
         
