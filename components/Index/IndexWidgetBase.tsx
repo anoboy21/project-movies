@@ -1,3 +1,13 @@
+import React, { ReactNode } from "react";
+
+export const IndexWidgetBase = ({ className, title }: { className?: string, title: string, children: React.ReactElement }, children: React.ReactElement): React.ReactElement => {
+    return (
+        <div className={`${className}`}>
+            <h1 className='m-3 font-semibold text-3xl text-gray-100'>{title}</h1>
+            {children}
+        </div>
+    );
+};
 export const Metrics = ({ vote_average }: { vote_average: number }) => {
 
     const percentage = Math.round(vote_average * 10).toString();
