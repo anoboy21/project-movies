@@ -1,10 +1,8 @@
 import { GetServerSidePropsContext } from "next";
-import { Movie } from "../../types/Movie";
 import Image from "next/future/image";
 import { PosterLoader } from "../../PosterLoader";
 import { Navbar } from "../../components/Navbar";
 import moment from "moment";
-import { Cast } from "../../types/Cast";
 import Placeholder from "../../assets/MovieSVG.svg";
 import { Fragment } from "react";
 import { TVShow } from "../../types/TVShow";
@@ -13,8 +11,8 @@ import { CreatorWidget } from "../../components/CreatorWidget";
 
 //TODO: Add case for when The movie is not released yet
 //TODO: Add placeholder image for movie poster
-export default function MoviePage({ data }: { data: TVShow }) {
-    console.log(data);
+export default function MoviePage({ data, mediaType }: { data: TVShow, mediaType: string }) {
+    // console.log(data);
     // return <p>Loading...</p>;
     return (
         <div>
@@ -66,7 +64,7 @@ export default function MoviePage({ data }: { data: TVShow }) {
                 </div>
                 <br />
 
-                <CastWidget id={data.id} />
+                <CastWidget id={data.id} mediaType={mediaType} />
                 {data.created_by.length >= 1 ? <CreatorWidget creators={data.created_by} className={"mt-3"} /> : <Fragment />}
             </div>
 
@@ -95,40 +93,6 @@ const Metrics = ({ data, styles }: { data: TVShow, styles: string }) => {
     )
 }
 
-export const Error = () => {
-    return (
-        <div className="flex flex-col justify-center items-center w-auto h-[252px]">
-            <p className="font-semibold text-3xl text-neutral-100">Something went wrong...</p>
-            <p className="font-semibold text-lg text-neutral-400">Please check your internet connection.</p>
-        </div>
-    )
-}
-
-export const ActorSkeletons = () => {
-    return (
-        <div className="flex flex-row overflow-x-auto gap-2">
-            <ActorSkeleton />
-            <ActorSkeleton />
-            <ActorSkeleton />
-            <ActorSkeleton />
-            <ActorSkeleton />
-            <ActorSkeleton />
-            <ActorSkeleton />
-            <ActorSkeleton />
-            <ActorSkeleton />
-            <ActorSkeleton />
-        </div>
-    )
-}
-
-
-const ActorSkeleton = () => (
-    <div className="mb-2">
-        <div className="w-[125px] h-[187px] animate-pulse bg-gray-100 rounded-md mb-2"></div>
-        <div className="w-24 h-1 animate-pulse bg-gray-100 rounded-sm mb-1"></div>
-        <div className="w-20 h-1 animate-pulse bg-gray-200 rounded-sm"></div>
-    </div>
-)
 export async function getServerSideProps(context: GetServerSidePropsContext) {
     let data: TVShow;
 
@@ -138,7 +102,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
     return {
         props: {
-            data: data
+            data: data,
+            mediaType: "tv"
         }
     }
 }
