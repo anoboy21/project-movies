@@ -11,9 +11,7 @@ import { IndexWidgetBase, IndexWidgetError, IndexWidgetScrollBar, IndexWidgetSke
 export const UpcomingMovies = ({ className }: { className?: string }): React.ReactElement => {
   return (
     <IndexWidgetBase className={`${className}`} title='Upcoming Movies' key={"upcoming-movies"}>
-      <IndexWidgetScrollBar>
-        <UpcomingWidgetContent />
-      </IndexWidgetScrollBar>
+      <UpcomingWidgetContent />
     </IndexWidgetBase>
   );
 };
@@ -23,7 +21,7 @@ const UpcomingWidgetContent = (): React.ReactElement => {
   if (!data && !error) return <IndexWidgetSkeletons />;
   if (error) return <IndexWidgetError />;
   return (
-    <Fragment>
+    <IndexWidgetScrollBar>
       {
         data!.results.map((item: UpcomingResult) => {
           return (
@@ -48,7 +46,7 @@ const UpcomingWidgetContent = (): React.ReactElement => {
           );
         })
       }
-    </Fragment>
+    </IndexWidgetScrollBar>
   );
 };
 

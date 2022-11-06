@@ -7,12 +7,10 @@ import fetcher from '../../Fetcher';
 import { IndexWidgetBase, IndexWidgetScrollBar, IndexWidgetError, IndexWidgetSkeletons, Metrics } from './IndexWidgetBase';
 import { Fragment } from 'react';
 
-export const PopularMovies = ({className}: {className?: string}): React.ReactElement => {
+export const PopularMovies = ({ className }: { className?: string }): React.ReactElement => {
   return (
     <IndexWidgetBase className={`${className}`} title={`Popular Movies`} key={"popular-movies"}>
-      <IndexWidgetScrollBar>
-        <PopularWidgetContent />
-      </IndexWidgetScrollBar>
+      <PopularWidgetContent />
     </IndexWidgetBase>
   );
 };
@@ -24,7 +22,7 @@ const PopularWidgetContent = (): React.ReactElement => {
   if (!data && !error) return <IndexWidgetSkeletons />;
   if (error) return <IndexWidgetError />;
   return (
-    <Fragment>
+    <IndexWidgetScrollBar>
       {data!.results.map((item: PopularResult) => {
         return (
           <div key={item.id} className="grid auto-cols-max mr-2 ml-2 p-2 rounded-sm text-xsm transition-all delay-10 hover:bg-neutral-900">
@@ -47,7 +45,7 @@ const PopularWidgetContent = (): React.ReactElement => {
           </div>
         );
       })}
-    </Fragment>
+    </IndexWidgetScrollBar>
   );
 };
 
