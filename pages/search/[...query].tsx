@@ -29,7 +29,6 @@ export const Search = ({ query }: { query: string }) => {
 const SearchContent = ({ data, error }: { data: MultiSearchResponse | undefined, error: Error | undefined }) => {
 
     // console.log("data: ", data);
-
     if (!data && !error) return <MultiSearchSkeletons />;
     if (!data) return <p>Error</p>;
     return (
@@ -48,33 +47,31 @@ const SearchContent = ({ data, error }: { data: MultiSearchResponse | undefined,
 
 const MultiSearchSkeletons = () => {
     return (
-        <Fragment>
+        <div className="grid auto-cols-auto grid-cols-1 md:grid-cols-2">
             <MultiSearchSkeleton />
             <MultiSearchSkeleton />
             <MultiSearchSkeleton />
             <MultiSearchSkeleton />
             <MultiSearchSkeleton />
             <MultiSearchSkeleton />
-        </Fragment>
+        </div>
     );
 }
 
-//TODO: Fix weird sizing issue
 const MultiSearchSkeleton = () => {
     return (
-        <div className="animate-pulse flex flex-row w-[484px] h-[211px] p-3">
+        <div className="animate-pulse flex flex-row h-[211px] p-3">
             <div className="w-[125px] h-full bg-gray-100 rounded-sm"></div>
             <div className="flex flex-col justify-between ml-2 mt-2 grow">
                 <div className="flex flex-col gap-2">
-                    <div className="bg-gray-100 w-2/12 h-2 rounded-md"></div>
-                    <div className="bg-gray-100 w-4/12 h-2 rounded-md"></div>
-                    <div className="bg-gray-100 w-6/12 h-2 rounded-md"></div>
                     <div className="bg-gray-100 w-8/12 h-2 rounded-md"></div>
-                    <div className="bg-gray-100 w-10/12 h-2 rounded-md"></div>
+                    <div className="bg-gray-100 w-6/12 h-2 rounded-md"></div>
+                    <div className="bg-gray-100 w-6/12 h-2 rounded-md"></div>
+                    <div className="bg-gray-100 w-4/12 h-2 rounded-md"></div>
                 </div>
                 <div className="flex flex-col gap-2">
-                    <div className="bg-gray-100 w-12/12 h-2 rounded-md"></div>
-                    <div className="bg-gray-100 w-12/12 h-2 rounded-md"></div>
+                    <div className="bg-gray-100 w-8 h-6 rounded-md"></div>
+                    <div className="bg-gray-100 w-12/12 h-4 rounded-md"></div>
                 </div>
             </div>
         </div>
