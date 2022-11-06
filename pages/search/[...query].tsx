@@ -1,6 +1,6 @@
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next"
 import { Dispatch, Fragment, RefObject, SetStateAction, useEffect, useRef, useState } from "react"
-import { isMovie, isPerson, isTVShow, MediaType, MultiSearchResponse, Result } from "../../types/MultiSearchTypes";
+import { isMovieResult, isPersonResult, isTVShowResult, MediaType, MultiSearchResponse, Result } from "../../types/MultiSearchTypes";
 import moment from "moment";
 import { Navbar } from "../../components/Navbar";
 import { useRouter } from "next/router";
@@ -36,9 +36,9 @@ const SearchContent = ({ data, error }: { data: MultiSearchResponse | undefined,
         <Fragment>
             {
                 data.results.map((result: Result, index: number) => {
-                    if (isMovie(result)) return <MultiSearchMovieCard key={`MovieCard:${index}`} result={result} />
-                    else if (isTVShow(result)) return <MultiSearchTVShowCard key={`TVShowCard:${index}`} result={result} />
-                    else if (isPerson(result)) return <MultiSearchPersonCard key={`PersonCard:${index}`} result={result} />
+                    if (isMovieResult(result)) return <MultiSearchMovieCard key={`MovieCard:${index}`} result={result} />
+                    else if (isTVShowResult(result)) return <MultiSearchTVShowCard key={`TVShowCard:${index}`} result={result} />
+                    else if (isPersonResult(result)) return <MultiSearchPersonCard key={`PersonCard:${index}`} result={result} />
                     else return <p key={`Impossible${index}`}>{`You shouldn&apos;t see this check index: ${index}`}</p>
                 })
             }
