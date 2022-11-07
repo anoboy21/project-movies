@@ -36,7 +36,7 @@ export default function MoviePage({ data, mediaType }: { data: Movie, mediaType:
                             <p className="font-bold text-3xl self-center text-neutral-100">{data.title}</p>
                             <p className="text-sm self-center text-neutral-300">{data.tagline}</p>
                         </div>
-                        <div className="flex flex-row mt-5 gap-3 justify-center">
+                        <div className="flex flex-row mt-5 gap-3 justify-center flex-wrap">
                             {data.genres.map((genre) => (
                                 <div key={`genre-${genre.id}`} className="text-base text-neutral-300 font-medium bg-red-600 p-2 rounded-md">
                                     {genre.name}

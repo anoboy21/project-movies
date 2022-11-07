@@ -12,7 +12,7 @@ import { CreatorWidget } from "../../components/CreatorWidget";
 //TODO: Add case for when The movie is not released yet
 //TODO: Add placeholder image for movie poster
 export default function MoviePage({ data, mediaType }: { data: TVShow, mediaType: string }) {
-    // console.log(data);
+    console.log(data);
     // return <p>Loading...</p>;
     return (
         <div>
@@ -32,7 +32,7 @@ export default function MoviePage({ data, mediaType }: { data: TVShow, mediaType
                             <p className="font-bold text-3xl self-center text-neutral-100">{data.name}</p>
                             <p className="text-sm self-center text-neutral-300">{data.tagline}</p>
                         </div>
-                        <div className="flex flex-row mt-5 gap-3 justify-center">
+                        <div className="flex flex-row mt-5 gap-3 flex-wrap justify-center">
                             {data.genres.map((genre) => (
                                 <div key={`genre-${genre.id}`} className="text-base text-neutral-300 font-medium bg-red-600 p-2 rounded-md">
                                     {genre.name}
